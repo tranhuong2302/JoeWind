@@ -1,6 +1,6 @@
 @extends('auth.layouts.auth')
 @section('title')
-<title>Login - Pages</title>
+<title>Forgot Password - Pages</title>
 @endsection
 @section('content')
 <div class="authentication-inner py-4">

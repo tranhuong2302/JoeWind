@@ -1,6 +1,6 @@
 @extends('auth.layouts.auth')
 @section('title')
-<title>Login - Pages</title>
+<title>Register - Pages</title>
 @endsection
 @section('content')
 <div class="authentication-inner">
@@ -51,7 +51,8 @@
             <h4 class="mb-2">Adventure starts here 🚀</h4>
             <p class="mb-4">Make your app management easy and fun!</p>
 
-            <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+            <form id="formAuthentication" class="mb-3" action="{{route('auth-register')}}" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus />
@@ -76,6 +77,9 @@
                             <a href="javascript:void(0);">privacy policy & terms</a>
                         </label>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    @include('admin.partials.alert')
                 </div>
                 <button class="btn btn-primary d-grid w-100">Sign up</button>
             </form>

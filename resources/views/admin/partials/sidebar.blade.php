@@ -35,7 +35,7 @@
                     </g>
                 </svg>
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">JoeWind</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -48,7 +48,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
         <li class="menu-item @yield('active-dashboard')">
-            <a href="index.html" class="menu-link">
+            <a href="{{route('admin.dashboard')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
@@ -58,13 +58,13 @@
             <span class="menu-header-text">Pages</span>
         </li>
         <li class="menu-item @yield('active-account-manage')">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Account Manage</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item @yield('active-accounts')">
-                    <a href="#" class="menu-link">
+                    <a href="{{route('accounts.index')}}" class="menu-link">
                         <div data-i18n="Account">Accounts</div>
                     </a>
                 </li>
@@ -87,17 +87,17 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="auth-login-basic.html" class="menu-link" target="_blank">
+                    <a href="{{route('auth.login')}}" class="menu-link" target="_blank">
                         <div data-i18n="Basic">Login</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                    <a href="{{route('auth.register')}}" class="menu-link" target="_blank">
                         <div data-i18n="Basic">Register</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
+                    <a href="{{route('auth.forgot')}}" class="menu-link" target="_blank">
                         <div data-i18n="Basic">Forgot Password</div>
                     </a>
                 </li>

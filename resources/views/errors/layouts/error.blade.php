@@ -9,9 +9,9 @@
 
     <meta name="description" content=""/>
 
-@yield('title')
+    @yield('title')
 
-<!-- Favicon -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{asset('admin/assets/img/favicon/favicon.ico')}}"/>
 
     <!-- Fonts -->
@@ -33,10 +33,8 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{asset('admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}"/>
 
-    <link rel="stylesheet" href="{{asset('admin/assets/vendor/libs/apex-charts/apex-charts.css')}}"/>
-
-    <!-- Page CSS -->
-
+    <!-- Page -->
+    <link rel="stylesheet" href="{{asset('admin/assets/vendor/css/pages/page-misc.css')}}" />
     <!-- Helpers -->
     <script src="{{asset('admin/assets/vendor/js/helpers.js')}}"></script>
 
@@ -44,43 +42,17 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('admin/assets/js/config.js')}}"></script>
 </head>
-
 <body>
-<!-- Layout wrapper -->
-<div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
-        <!-- Menu -->
-    @include('admin.partials.sidebar')
-    <!-- / Menu -->
+<!-- Content -->
 
-        <!-- Layout container -->
-        <div class="layout-page">
-            <!-- Navbar -->
-        @include('admin.partials.header')
-        <!-- / Navbar -->
-
-            <!-- Content wrapper -->
-            <div class="content-wrapper">
-                <!-- Content -->
-                <div class="container-xxl flex-grow-1 container-p-y">
-                    @yield('content')
-                </div>
-                <!-- / Content -->
-
-                <!-- Footer -->
-            @include('admin.partials.footer')
-            <!-- / Footer -->
-                <div class="content-backdrop fade"></div>
-            </div>
-            <!-- Content wrapper -->
-        </div>
-        <!-- / Layout page -->
-    </div>
-
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
+<!-- Error -->
+<div class="container-xxl container-p-y">
+    @yield('content');
 </div>
-<!-- / Layout wrapper -->
+<!-- /Error -->
+
+<!-- / Content -->
+
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
@@ -93,17 +65,14 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="{{asset('admin/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
 
 <!-- Main JS -->
 <script src="{{asset('admin/assets/js/main.js')}}"></script>
 
 <!-- Page JS -->
-<script src="{{asset('admin/assets/js/dashboards-analytics.js')}}"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-@yield('script')
 </body>
-
 </html>
+
