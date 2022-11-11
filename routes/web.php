@@ -26,13 +26,15 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'postRegister'])->name('auth-register');
 
 });
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.index');
-    })->middleware('auth')->name('admin.dashboard');
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {return view('admin.index');})->name('admin.dashboard');
     Route::prefix('accounts')->group(function () {
         Route::get('/', [AdminAccountController::class, 'index'])->name('accounts.index');
-        Route::get('/create', [AdminAccountController::class, 'create'])->name('account.create');
-        Route::post('/store', [AdminAccountController::class, 'store'])->name('account.store');
+        Route::get('/create', [AdminAccountController::class, 'create'])->name('accounts.create');
+        Route::get('{id}/edit', [AdminAccountController::class, 'edit'])->name('accounts.edit');
+        Route::post('/store', [AdminAccountController::class, 'store'])->name('accounts.store');
+        Route::put('/{id}', [AdminAccountController::class, 'update'])->name('accounts.update');
+        Route::get('{id}/change-password', [AdminAccountController:: class, 'editPassword'])->name('accounts.editpassword');
+        Route::put('{id}/change-password', [AdminAccountController::class, 'updatePassword'])->name('accounts.updatepassword');
     });
 });

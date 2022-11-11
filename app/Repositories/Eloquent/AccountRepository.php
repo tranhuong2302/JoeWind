@@ -14,8 +14,38 @@ class AccountRepository implements IAccountRepository
         $this->account = $user;
     }
 
-    public function createAccount($data)
+    public function getAccounts()
     {
-        return $this->account->create($data);
+        return $this->account->all();
+    }
+
+    public function createAccount($request)
+    {
+        return $this->account->create($request);
+    }
+
+    public function getAccountById($id)
+    {
+        return $this->account->find($id);
+    }
+
+    public function updateAccountById($id, $request)
+    {
+        return $this->account->find($id)->update($request);
+    }
+
+    public function changePassword($id, $request)
+    {
+        return $this->account->find($id)->update(['password' => $request]);
+    }
+
+    public function deleteAccountById($id)
+    {
+        return $this->account->find($id)->delete();
+    }
+
+    public function deleteMultipleAccount($ids)
+    {
+        return $this->account->whereIn('id', $ids)->delete();
     }
 }

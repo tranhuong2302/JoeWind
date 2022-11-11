@@ -24,7 +24,11 @@ class AccountRequest extends FormRequest
     public function rules()
     {
         return [
-            ''
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'status' => 'required',
         ];
     }
 }

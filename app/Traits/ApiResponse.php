@@ -13,7 +13,7 @@ trait ApiResponse {
         ], $code);
     }
 
-    public function errorResponse($message = null, $code = 0)
+    public function errorResponse($message = null, $code = 500)
     {
         return response()->json([
             'status' => 'FAIL',

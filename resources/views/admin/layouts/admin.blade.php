@@ -36,7 +36,9 @@
     <link rel="stylesheet" href="{{asset('admin/assets/vendor/libs/apex-charts/apex-charts.css')}}"/>
 
     <!-- Page CSS -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 
+    @yield('css')
     <!-- Helpers -->
     <script src="{{asset('admin/assets/vendor/js/helpers.js')}}"></script>
 
@@ -103,6 +105,8 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+{!! Toastr::message() !!}
 @yield('script')
 </body>
 

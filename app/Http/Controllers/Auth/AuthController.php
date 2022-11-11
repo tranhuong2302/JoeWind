@@ -29,11 +29,14 @@ class AuthController extends Controller
     {
         return view('auth.login.auth-register');
     }
+
     public function forgotPassword()
     {
         return view('auth.login.auth-forgot-password');
     }
-    public function unauthorized(){
+
+    public function unauthorized()
+    {
         return view('errors.403Page');
     }
 

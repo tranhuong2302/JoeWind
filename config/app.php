@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -195,6 +195,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //Install
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+        Brian2694\Toastr\ToastrServiceProvider::class,
     ],
 
     /*
@@ -210,6 +213,10 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+
+        //Install
+        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
+        'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
     ])->toArray(),
 
 ];
