@@ -12,7 +12,6 @@ trait ToastNotification
             "positionClass" => "toast-top-right",
             "closeButton" => true,
             "progressBar" => true,
-            "preventDuplicates" => true,
             "newestOnTop" => true,
             "timeOut" => "3000",
         ]);
@@ -24,7 +23,6 @@ trait ToastNotification
             "positionClass" => "toast-top-right",
             "closeButton" => true,
             "progressBar" => true,
-            "preventDuplicates" => true,
             "newestOnTop" => true,
             "timeOut" => "3000",
         ]);

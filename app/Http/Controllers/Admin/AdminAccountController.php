@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Account\AccountRequest;
-use App\Repositories\Eloquent\AccountRepository;
+use App\Http\Requests\Admin\Account\AccountRequest;
+use App\Repositories\Interfaces\Admin\IAccountRepository;
+use App\Repositories\Interfaces\Admin\IRoleRepository;
 use App\Traits\ToastNotification;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
@@ -20,17 +21,18 @@ class AdminAccountController extends Controller
     use ToastNotification;
 
     private $accountRepo;
+    private $roleRepo;
 
-    public function __construct(AccountRepository $accountRepo)
+    public function __construct(IAccountRepository $accountRepo, IRoleRepository $roleRepo)
     {
         $this->accountRepo = $accountRepo;
+        $this->roleRepo = $roleRepo;
     }
 
     public function index()
     {
         try {
-            $accounts = $this->accountRepo->getAccounts();
-            return view('admin.accounts.index', compact('accounts'));
+            return view('admin.accounts.index');
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
             return redirect()->back();
@@ -41,7 +43,8 @@ class AdminAccountController extends Controller
     public function create()
     {
         try {
-            return view('admin.accounts.add');
+            $roles = $this->roleRepo->getAll();
+            return view('admin.accounts.add', compact('roles'));
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
             return redirect()->back();
@@ -70,12 +73,22 @@ class AdminAccountController extends Controller
                     $data['image_path'] = $uploadedFileUrl;
                 }
             }
-            $account = $this->accountRepo->createAccount($data);
-            if ($account) {
-                $this->toastSuccess("Create Account Success", "Success");
-                DB::commit();
-                return view('admin.accounts.add');
-            } else  return redirect()->back();
+            $account = $this->accountRepo->createData($data);
+            //2 cách thêm mảng
+            $roleIds = $request->get('role_id');
+            // C1 truyền thống
+            // foreach ($roleIds as $roleItem) {
+            //     DB::table('user_roles')->insert([
+            //         'role_id' => $roleItem,
+            //         'user_id' => $account->id,
+            //     ]);
+            // }
+
+            // C2 qua model khai báo relationship
+            $account->roles()->attach($roleIds);
+            $this->toastSuccess("Create Account Success", "Success");
+            DB::commit();
+            return redirect()->route('accounts.index');
         } catch (Exception $e) {
             DB::rollback();
             $this->toastError("Error creating account", "Error");
@@ -87,8 +100,10 @@ class AdminAccountController extends Controller
     public function edit($id)
     {
         try {
-            $account = $this->accountRepo->getAccountById($id);
-            return view('admin.accounts.update', compact('account'));
+            $account = $this->accountRepo->findDataById($id);
+            $roles = $this->roleRepo->getAll();
+            $rolesOfUser = $account->roles;
+            return view('admin.accounts.update', compact('account', 'roles', 'rolesOfUser'));
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
             return redirect()->back();
@@ -117,13 +132,11 @@ class AdminAccountController extends Controller
                     $data['image_path'] = $uploadedFileUrl;
                 }
             }
-            $account = $this->accountRepo->updateAccountById($id, $data);
-            if ($account) {
-                $this->toastSuccess("Updated account successfully", "Success");
-                DB::commit();
-                return redirect()->route('accounts.index');
-            } else  return redirect()->back();
-
+            $account = $this->accountRepo->updateDataById($id, $data);
+            $account->roles()->sync($request->get('role_id'));
+            $this->toastSuccess("Updated account successfully", "Success");
+            DB::commit();
+            return redirect()->route('accounts.index');
         } catch (Exception $e) {
             DB::rollback();
             $this->toastError("Error updating account", "Error");
@@ -146,7 +159,7 @@ class AdminAccountController extends Controller
     public function updatePassword($id, Request $request)
     {
         try {
-            $account = $this->accountRepo->getAccountById($id);
+            $account = $this->accountRepo->findDataById($id);
             $old_Password = $request->get('oldpassword');
             $new_Password = $request->get('newpassword');
             $confirm_Password = $request->get('confirmpassword');
@@ -155,6 +168,7 @@ class AdminAccountController extends Controller
                 if ($new_Password == $confirm_Password) {
                     $hash_Passwrod = Hash::make($new_Password);
                     $this->accountRepo->changePassword($id, $hash_Passwrod);
+                    $this->toastSuccess("Change password successfully", "Success");
                     return redirect()->route('accounts.index');
                 } else {
                     $this->toastWarning("New password and confirm password is not the same", "Warning");

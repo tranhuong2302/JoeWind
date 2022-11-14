@@ -195,6 +195,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //Add Provider
+        App\Providers\RepositoryServiceProvider::class,
+
         //Install
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         Brian2694\Toastr\ToastrServiceProvider::class,
@@ -216,7 +219,7 @@ return [
 
         //Install
         'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
-        'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
+        'Toastr' => Brian2694\Toastr\Facades\Toastr::class,
     ])->toArray(),
 
 ];

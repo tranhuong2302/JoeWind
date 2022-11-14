@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('address');
-            $table->integer('phone');
+            $table->string('phone');
             $table->string('image_path');
             $table->string('image_name');
             $table->integer('status');

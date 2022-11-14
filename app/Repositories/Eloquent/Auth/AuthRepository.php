@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\Eloquent\Auth;
 
 use App\Models\User;
-use App\Repositories\Interfaces\IAuthRepository;
+use App\Repositories\Interfaces\Auth\IAuthRepository;
 use Illuminate\Support\Facades\Auth;
 
 class AuthRepository implements IAuthRepository

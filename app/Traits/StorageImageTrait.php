@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 trait StorageImageTrait
 {
+    public function __construct(){
+
+    }
+
     public function storageTraitUpload($request, $fieldName, $folderName)
     {
         if ($request->hasFile($fieldName)) {

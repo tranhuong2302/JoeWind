@@ -4,7 +4,15 @@
 @section('title')
     <title>Account Manage - Update Account</title>
 @endsection
-
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <style>
+        .select2-selection__choice {
+            background-color: #0c525d !important;
+            color: white;
+        }
+    </style>
+@endsection
 @section('content')
     @include('admin.partials.content-header', ['pages' => 'Account Manage', 'name' => 'Accounts'])
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
@@ -31,7 +39,8 @@
                 </div>
                 <!-- Account -->
                 <div class="card-body">
-                    <form id="formAccountSettings" action="{{route('accounts.update', $account)}}" method="POST"
+                    <form id="formAccountSettings" action="{{route('accounts.update', ['id' => $account->id])}}"
+                          method="POST"
                           enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="_method" value="PUT">
@@ -109,12 +118,32 @@
                                        value="{{$account->address}}"
                                        placeholder="Address"/>
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="status" class="form-label">Status</label>
-                                <select id="status" class="select2 form-select" name="status">
-                                    <option value="1" {{$account->status == 1 ? 'selected' : ''}}>Active</option>
-                                    <option value="0" {{$account->status == 0 ? 'selected' : ''}}>Block</option>
+                            <div class="mb-3 col-md-12">
+                                <label for="floatingSelect2" class="form-label">Roles</label>
+                                <select name="role_id[]" id="floatingSelect2" class="form-control selectRoles"
+                                        multiple="multiple">
+                                    @foreach($roles as $role)
+                                        <option {{$rolesOfUser->contains('id', $role->id) ? 'selected' : ''}}
+                                            value="{{$role->id}}">{{$role->name}}</option>
+                                    @endforeach
                                 </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="status" class="form-label pe-2">Status</label>
+                                <div class="btn-group" role="group">
+                                    <input
+                                        type="radio"
+                                        name="status"
+                                        id="radioActive"
+                                        checked
+                                        value="1"
+                                        {{$account->status == 1 ? 'checked' : ''}}
+                                    />
+                                    <label class="pe-3" for="radioActive">Active</label>
+                                    <input type="radio" name="status" id="radioBlock"
+                                           value="0" {{$account->status == 0 ? 'checked' : ''}}/>
+                                    <label for="radioBlock">Block</label>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-2">
@@ -131,4 +160,14 @@
 @section('script')
     <!-- Page JS -->
     <script src="{{asset('admin/assets/js/pages-account-settings-account.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(function () {
+            $(".selectRoles").select2({
+                placeholder: "Select Roles",
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
+        })
+    </script>
 @endsection

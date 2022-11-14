@@ -6,7 +6,7 @@
     <div class="misc-wrapper">
         <h2 class="mb-2 mx-2">Access denied :(</h2>
         <p class="mb-4 mx-2">Oops! 😖 You dont have authorize.</p>
-        <a href="{{route('auth.login')}}" class="btn btn-primary">Back to home</a>
+        <a href="{{ url()->previous() }}" class="btn btn-primary">Back to home</a>
         <div class="mt-3">
             <img
                 src="{{asset('admin/assets/img/illustrations/page-misc-error-light.png')}}"

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Repositories\Eloquent\AuthRepository;
+use App\Repositories\Eloquent\Auth\AuthRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -37,7 +37,7 @@ class AuthController extends Controller
 
     public function unauthorized()
     {
-        return view('errors.403Page');
+        return view('errors.403');
     }
 
     public function postRegister(RegisterRequest $registerRequest)

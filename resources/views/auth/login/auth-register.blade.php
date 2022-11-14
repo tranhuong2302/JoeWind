@@ -44,7 +44,7 @@
                             </g>
                         </svg>
                     </span>
-                    <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+                    <span class="app-brand-text demo text-body fw-bolder">JoeWind</span>
                 </a>
             </div>
             <!-- /Logo -->
@@ -86,7 +86,7 @@
 
             <p class="text-center">
                 <span>Already have an account?</span>
-                <a href="auth-login-basic.html">
+                <a href="{{route('auth.login')}}">
                     <span>Sign in instead</span>
                 </a>
             </p>

@@ -44,7 +44,7 @@
                             </g>
                         </svg>
                     </span>
-                    <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+                    <span class="app-brand-text demo text-body fw-bolder">JoeWind</span>
                 </a>
             </div>
             <!-- /Logo -->
@@ -60,7 +60,7 @@
                 <div class="mb-3 form-password-toggle">
                     <div class="d-flex justify-content-between">
                         <label class="form-label" for="password">Password</label>
-                        <a href="auth-forgot-password-basic.html">
+                        <a href="{{route("auth.forgot")}}">
                             <small>Forgot Password?</small>
                         </a>
                     </div>
@@ -85,7 +85,7 @@
 
             <p class="text-center">
                 <span>New on our platform?</span>
-                <a href="auth-register-basic.html">
+                <a href="{{route('auth.register')}}">
                     <span>Create an account</span>
                 </a>
             </p>

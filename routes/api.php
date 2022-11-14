@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AdminAccountApiController;
+use App\Http\Controllers\Api\Admin\AdminPermissionApiController;
+use App\Http\Controllers\Api\Admin\AdminRoleApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AdminAccountApiController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,9 +21,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::prefix('admin')->group(function () {
+
     Route::prefix('accounts')->group(function () {
         Route::get('/', [AdminAccountApiController:: class, 'getApiAccount']);
         Route::delete('{id}/delete', [AdminAccountApiController::class, 'deleteAccountById']);
         Route::delete('deleteSelected', [AdminAccountApiController::class, 'deleteSelected'])->name('accounts.deleteSelected');
+    });
+
+    Route::prefix('permissions')->group(function () {
+        Route::get('/', [AdminPermissionApiController::class, 'getApiPermissions']);
+        Route::delete('{id}/delete', [AdminPermissionApiController::class, 'deletePermissionById']);
+        Route::delete('deleteSelected', [AdminPermissionApiController::class, 'deleteSelected'])->name('permissions.deleteSelected');
+    });
+    Route::prefix('roles')->group(function () {
+        Route::get('/', [AdminRoleApiController::class, 'getApiRoles']);
+        Route::delete('{id}/delete', [AdminRoleApiController::class, 'deleteRoleById']);
+        Route::delete('deleteSelected', [AdminRoleApiController::class, 'deleteSelected'])->name('roles.deleteSelected');
     });
 });

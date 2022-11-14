@@ -69,12 +69,12 @@
                     </a>
                 </li>
                 <li class="menu-item @yield('active-roles')">
-                    <a href="#" class="menu-link">
+                    <a href="{{route('roles.index')}}" class="menu-link">
                         <div data-i18n="Notifications">Roles</div>
                     </a>
                 </li>
                 <li class="menu-item @yield('active-permissions')">
-                    <a href="#" class="menu-link">
+                    <a href="{{route('permissions.index')}}" class="menu-link">
                         <div data-i18n="Connections">Permissions</div>
                     </a>
                 </li>
