@@ -16,5 +16,29 @@ return [
         'create_permission' => 'create-permission',
         'edit_permission' => 'edit-permission',
         'delete_permission' => 'delete-permission',
+
+        'list_categories' => 'list-categories',
+        'create_category' => 'create-category',
+        'edit_category' => 'edit-category',
+        'delete_category' => 'delete-category',
+
+        'list_products' => 'list-products',
+        'create_product' => 'create-product',
+        'edit_product' => 'edit-product',
+        'delete_product' => 'delete-product',
+    ],
+
+    'module_table' => [
+        'Account',
+        'Role',
+        'Permission',
+        'Category'
+    ],
+
+    'module_children' => [
+        'List',
+        'Create',
+        'Edit',
+        'Delete',
     ]
 ];

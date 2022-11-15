@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAccountController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminPermissionController;
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -73,5 +75,44 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:create-role');
         Route::put('/{id}', [AdminRoleController::class, 'update'])->name('roles.update')
             ->middleware('can:edit-role');
+    });
+
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [AdminCategoryController::class, 'index'])->name('categories.index')
+            ->middleware('can:categories-list');
+        Route::get('/create', [AdminCategoryController::class, 'create'])->name('categories.create')
+            ->middleware('can:create-category');
+        Route::get('{id}/edit', [AdminCategoryController::class, 'edit'])->name('categories.edit')
+            ->middleware('can:edit-category');
+        Route::post('/store', [AdminCategoryController::class, 'store'])->name('categories.store')
+            ->middleware('can:create-category');
+        Route::put('/{id}', [AdminCategoryController::class, 'update'])->name('categories.update')
+            ->middleware('can:edit-category');
+    });
+
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [AdminCategoryController::class, 'index'])->name('categories.index')
+            ->middleware('can:categories-list');
+        Route::get('/create', [AdminCategoryController::class, 'create'])->name('categories.create')
+            ->middleware('can:create-category');
+        Route::get('{id}/edit', [AdminCategoryController::class, 'edit'])->name('categories.edit')
+            ->middleware('can:edit-category');
+        Route::post('/store', [AdminCategoryController::class, 'store'])->name('categories.store')
+            ->middleware('can:create-category');
+        Route::put('/{id}', [AdminCategoryController::class, 'update'])->name('categories.update')
+            ->middleware('can:edit-category');
+    });
+
+    Route::prefix('products')->group(function () {
+        Route::get('/', [AdminCategoryController::class, 'index'])->name('products.index')
+            ->middleware('can:products-list');
+        Route::get('/create', [AdminProductController::class, 'create'])->name('products.create')
+            ->middleware('can:create-product');
+        Route::get('{id}/edit', [AdminProductController::class, 'edit'])->name('products.edit')
+            ->middleware('can:edit-product');
+        Route::post('/store', [AdminProductController::class, 'store'])->name('products.store')
+            ->middleware('can:create-product');
+        Route::put('/{id}', [AdminProductController::class, 'update'])->name('products.update')
+            ->middleware('can:edit-product');
     });
 });

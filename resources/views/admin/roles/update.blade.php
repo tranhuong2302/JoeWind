@@ -8,14 +8,18 @@
 @section('content')
     @include('admin.partials.content-header', ['pages' => 'Account Manage', 'name' => 'Roles'])
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('roles.index')}}"><i class="bx bx-shield me-1"></i> List Roles</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('roles.create')}}">
-                <i style="font-size: 24px;" class="bx bx-plus-circle me-1"></i>Create Role
-            </a>
-        </li>
+        @include('admin.partials.content-body', [
+           'permissions_list' => 'list-roles',
+           'active_list' => '',
+           'models' => 'Roles',
+           'url_list' => route('roles.index'),
+           'class_list' => 'bx bx-shield me-1',
+           'permission_create' => 'create-role',
+           'active_create' => '',
+           'model' => 'Role',
+           'url_create' => route('roles.create'),
+           'class_create' => 'bx bx-plus-circle me-1'
+       ])
         <li class="nav-item">
             <a class="nav-link active" href="javascript:void(0);">
                 <i style="font-size: 24px;" class="bx bx-edit-alt me-1"></i>Update Role

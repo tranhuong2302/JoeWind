@@ -16,14 +16,18 @@
 @section('content')
     @include('admin.partials.content-header', ['pages' => 'Account Manage', 'name' => 'Accounts'])
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('accounts.index')}}"><i class="bx bx-user me-1"></i> List Accounts</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="{{route('accounts.create')}}">
-                <i style="font-size: 24px;" class="bx bx-user-plus me-1"></i>Create Account
-            </a>
-        </li>
+        @include('admin.partials.content-body', [
+            'permissions_list' => 'list-accounts',
+            'active_list' => '',
+            'models' => 'Accounts',
+            'url_list' => route('accounts.index'),
+            'class_list' => 'bx bx-user me-1',
+            'permission_create' => 'create-account',
+            'active_create' => 'active',
+            'model' => 'Account',
+            'url_create' => route('accounts.create'),
+            'class_create' => 'bx bx-user-plus me-1'
+            ])
     </ul>
     <div class="row">
         <div class="col-md-12">

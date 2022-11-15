@@ -1,8 +1,8 @@
 @extends('admin.layouts.admin')
-@section('active-account-manage', 'active open')
-@section('active-permissions', 'active')
+@section('active-product-manage', 'active open')
+@section('active-categories', 'active')
 @section('title')
-    <title>Account Manage - List Permissions</title>
+    <title>Product Manage - List Categories</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('css')
@@ -11,31 +11,31 @@
 @endsection
 @section('content')
     <!-- Striped Rows -->
-    @include('admin.partials.content-header', ['pages' => 'Account Manage', 'name' => 'Permissions'])
+    @include('admin.partials.content-header', ['pages' => 'Product Manage', 'name' => 'Categories'])
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
         @include('admin.partials.content-body', [
-           'permissions_list' => 'list-permissions',
+           'permissions_list' => 'list-categories',
            'active_list' => 'active',
-           'models' => 'Permissions',
-           'url_list' => route('permissions.index'),
-           'class_list' => 'bx bx-list-ul me-1',
-           'permission_create' => 'create-permission',
+           'models' => 'Categories',
+           'url_list' => route('categories.index'),
+           'class_list' => 'bx bx-category-alt me-1',
+           'permission_create' => 'create-category',
            'active_create' => '',
-           'model' => 'Permission',
-           'url_create' => route('permissions.create'),
+           'model' => 'Category',
+           'url_create' => route('categories.create'),
            'class_create' => 'bx bx-plus-circle me-1'
        ])
-        @if(auth()->user()->checkPermissionAccess('delete-permission') == true)
+        @if(auth()->user()->checkPermissionAccess('delete-category') == true)
             <li class="nav-item">
                 <button id="deleteAllSelectedRecordRecursive" class="btn btn-outline-danger"
-                        data-url="{{ route('permissions.deleteSelected')}}">
-                    <i class="bx bx-trash me-1"></i>Delete Permission
+                        data-url="{{ route('categories.deleteSelected')}}">
+                    <i class="bx bx-trash me-1"></i>Delete Categories
                 </button>
             </li>
         @endif
     </ul>
     <div class="card">
-        <h5 class="card-header">List Permissions</h5>
+        <h5 class="card-header">List Categories</h5>
         <div class="col-sm-12">
             @include('admin.partials.alert')
         </div>
@@ -47,7 +47,8 @@
                     </th>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Display Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>

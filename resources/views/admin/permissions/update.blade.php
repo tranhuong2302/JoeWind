@@ -8,15 +8,18 @@
 @section('content')
     @include('admin.partials.content-header', ['pages' => 'Account Manage', 'name' => 'Permissions'])
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('permissions.index')}}"><i class="bx bx-list-ul me-1"></i> List
-                Permissions</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('permissions.create')}}">
-                <i style="font-size: 24px;" class="bx bx-plus-circle me-1"></i>Create Permission
-            </a>
-        </li>
+        @include('admin.partials.content-body', [
+               'permissions_list' => 'list-permissions',
+               'active_list' => '',
+               'models' => 'Permissions',
+               'url_list' => route('permissions.index'),
+               'class_list' => 'bx bx-list-ul me-1',
+               'permission_create' => 'create-permission',
+               'active_create' => '',
+               'model' => 'Permission',
+               'url_create' => route('permissions.create'),
+               'class_create' => 'bx bx-plus-circle me-1'
+            ])
         <li class="nav-item">
             <a class="nav-link active" href="javascript:void(0);">
                 <i style="font-size: 24px;" class="bx bx-edit-alt me-1"></i>Update Permissions

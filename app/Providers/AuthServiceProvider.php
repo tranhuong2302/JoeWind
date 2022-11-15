@@ -53,7 +53,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->checkPermissionAccess(config('permissions.access.delete_role'));
         });
 
-        //Role
+        //Permission
         Gate::define('permissions-list', function ($user) {
             return $user->checkPermissionAccess(config('permissions.access.list_permissions'));
         });
@@ -65,6 +65,34 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('delete-permission', function ($user) {
             return $user->checkPermissionAccess(config('permissions.access.delete_permission'));
+        });
+
+        //Category
+        Gate::define('categories-list', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.list_categories'));
+        });
+        Gate::define('create-category', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.create_category'));
+        });
+        Gate::define('edit-category', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.edit_category'));
+        });
+        Gate::define('delete-category', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.delete_category'));
+        });
+
+        //Product
+        Gate::define('products-list', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.list_products'));
+        });
+        Gate::define('create-product', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.create_product'));
+        });
+        Gate::define('edit-product', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.edit_product'));
+        });
+        Gate::define('delete-product', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.delete_product'));
         });
     }
 }

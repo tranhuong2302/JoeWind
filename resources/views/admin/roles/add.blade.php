@@ -7,14 +7,18 @@
 @section('content')
     @include('admin.partials.content-header', ['pages' => 'Account Manage', 'name' => 'Roles'])
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('roles.index')}}"><i class="bx bx-shield me-1"></i> List Roles</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="{{route('roles.create')}}">
-                <i style="font-size: 24px;" class="bx bx-plus-circle me-1"></i>Create Role
-            </a>
-        </li>
+        @include('admin.partials.content-body', [
+               'permissions_list' => 'list-roles',
+               'active_list' => '',
+               'models' => 'Roles',
+               'url_list' => route('roles.index'),
+               'class_list' => 'bx bx-shield me-1',
+               'permission_create' => 'create-role',
+               'active_create' => 'active',
+               'model' => 'Role',
+               'url_create' => route('roles.create'),
+               'class_create' => 'bx bx-plus-circle me-1'
+            ])
     </ul>
     <div class="row">
         <div class="col-md-12">
@@ -62,7 +66,7 @@
                                                 <input
                                                     id="{{$permissionItem->id}}"
                                                     type="checkbox"
-                                                    class="form-check-input checkbox_wrapper"
+                                                    class="form-check-input me-2 checkbox_wrapper"
                                                     value="">
                                                 <label for="{{$permissionItem->id}}">
                                                     Module {{$permissionItem->name}}
@@ -76,7 +80,7 @@
                                                             <input
                                                                 id="{{ $Item->id }}"
                                                                 type="checkbox" name="permission_id[]"
-                                                                class="form-check-input checkbox_children"
+                                                                class="form-check-input me-2 checkbox_children"
                                                                 value="{{$Item->id}}">
                                                             <label for="{{ $Item->id }}">
                                                                 {{ $Item->name }}

@@ -13,20 +13,26 @@
     <!-- Striped Rows -->
     @include('admin.partials.content-header', ['pages' => 'Account Manage', 'name' => 'Accounts'])
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
-        <li class="nav-item">
-            <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> List Accounts</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('accounts.create')}}">
-                <i style="font-size: 24px;" class="bx bx-user-plus me-1"></i>Create Account
-            </a>
-        </li>
-        <li class="nav-item">
-            <button id="deleteAllSelectedRecord" class="btn btn-outline-danger"
-                    data-url="{{ route('accounts.deleteSelected')}}">
-                <i class="bx bx-trash me-1"></i>Delete Account
-            </button>
-        </li>
+        @include('admin.partials.content-body', [
+            'permissions_list' => 'list-accounts',
+            'active_list' => '',
+            'models' => 'Accounts',
+            'url_list' => route('accounts.index'),
+            'class_list' => 'bx bx-user me-1',
+            'permission_create' => 'create-account',
+            'active_create' => '',
+            'model' => 'Account',
+            'url_create' => route('accounts.create'),
+            'class_create' => 'bx bx-user-plus me-1'
+        ])
+        @if(auth()->user()->checkPermissionAccess('delete-account') == true)
+            <li class="nav-item">
+                <button id="deleteAllSelectedRecord" class="btn btn-outline-danger"
+                        data-url="{{ route('accounts.deleteSelected')}}">
+                    <i class="bx bx-trash me-1"></i>Delete Accounts
+                </button>
+            </li>
+        @endif
     </ul>
     <div class="card">
         <h5 class="card-header">List Accounts</h5>

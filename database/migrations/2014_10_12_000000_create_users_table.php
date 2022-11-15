@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('image_path');
-            $table->string('image_name');
             $table->integer('status');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -6,10 +6,12 @@ class Recursive
 {
     private $data;
     private $html;
+    private $stringUrl;
 
-    public function __construct($data)
+    public function __construct($data, $stringUrl)
     {
         $this->data = $data;
+        $this->stringUrl = $stringUrl;
 
     }
 
@@ -24,20 +26,37 @@ class Recursive
                             value="' . $value->id . '">
                         </td>
                         <td>' . $value->id . '</td>
-                        <td>' . $text . $value->name . '</td>
-                        <td>' . $value->display_name . '</td>
+                        <td>' . $text . $value->name . '</td>';
+                if ($value->display_name) {
+                    $this->html .= '<td>' . $value->display_name . '</td>';
+                }
+                if ($value->image_path) {
+                    $this->html .= '<td><img class="rounded-circle" width="50" height="50"
+                                        src="' . $value->image_path . '" alt="" />
+                                    </td>';
+                }
+                if (empty($value->image_path) && $this->stringUrl != 'permissions') {
+                    $this->html .= '<td><img class="rounded-circle" width="50" height="50"
+                                        src="" alt="" />
+                                    </td>';
+                }
+                if ($value->description) {
+                    $this->html .= '<td>' . $value->description . '</td>';
+                }
+                $this->html .= '
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item"  href="/admin/permissions/' . $value->id . '/edit">
+                                    <a class="dropdown-item"
+                                        href="/admin/' . $this->stringUrl . '/' . $value->id . '/edit">
                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                     </a>
                                     <form method="POST" class="action_deleteRecursive"
-                                          data-url="/api/admin/permissions/' . $value->id . '/delete"
-                                          action="/api/admin/permissions/' . $value->id . '/delete"
+                                          data-url="/api/admin/' . $this->stringUrl . '/' . $value->id . '/delete"
+                                          action="/api/admin/' . $this->stringUrl . '/' . $value->id . '/delete"
                                     >
                                        <input type="hidden" name="_token" value="' . csrf_token() . '"/>
                                        <input type="hidden" name="_method" value="DELETE" />
