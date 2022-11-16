@@ -56,7 +56,12 @@
                                 />
                             </div>
                             <div class="mb-3 col-md-12">
-                                <label class="form-label">Permission</label>
+                                <input
+                                    id="checkAll"
+                                    type="checkbox"
+                                    class="form-check-input me-2 checkbox_All"
+                                    value="">
+                                <label for="checkAll" class="form-label">Check All Permission</label>
                                 <span>
                                       @foreach($permissionsParent as $permissionItem)
                                         <div class="card mb-3 col-md-12">
@@ -106,6 +111,10 @@
 @endsection
 @section('script')
     <script>
+        $('.checkbox_All').on('click', function () {
+            $(this).parent().find('.checkbox_wrapper').prop('checked', $(this).prop('checked'));
+            $(this).parent().find('.checkbox_children').prop('checked', $(this).prop('checked'));
+        });
         $('.checkbox_wrapper').on('click', function () {
             $(this).parents('div.card.mb-3.col-md-12').find('.checkbox_children').prop('checked', $(this).prop('checked'));
         });

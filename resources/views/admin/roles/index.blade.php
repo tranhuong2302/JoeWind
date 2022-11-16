@@ -103,18 +103,23 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>\
                                     </button>\
                                     <div class="dropdown-menu">\
+                                        @if(auth()->user()->checkPermissionAccess('edit-role'))\
                                         <a class="dropdown-item" href=/admin/roles/' + id + '/edit>\
-                                            <i class="bx bx-edit-alt me-1"></i> Edit\
-                                        </a>\
-                                        <form method="POST" class="action_delete"\
-                                            action=/api/admin/roles/' + id + '/delete\
-                                            data-url=/api/admin/roles/' + id + '/delete>\
-                                            @csrf\
-                                            <input type="hidden" name="_method" value="DELETE" />\
-                                            <button class="dropdown-item" type="submit">\
-                                                <i class="bx bx-trash me-1"></i>Delete\
-                                            </button>\
-                                        </form>\
+                                                <i class="bx bx-edit-alt me-1"></i> Edit\
+                                            </a>\
+                                        \
+                                        @endif\
+                                         @if(auth()->user()->checkPermissionAccess('delete-role'))\
+                                            <form method="POST" class="action_delete"\
+                                                action=/admin/roles/' + id + '/delete\
+                                                data-url=/admin/roles/' + id + '/delete>\
+                                                @csrf\
+                                                <input type="hidden" name="_method" value="DELETE" />\
+                                                <button class="dropdown-item" type="submit">\
+                                                    <i class="bx bx-trash me-1"></i>Delete\
+                                                </button>\
+                                            </form>\
+                                        @endif\
                                     </div>\
                                 </div>'
                             )

@@ -1,8 +1,8 @@
 @extends('admin.layouts.admin')
-@section('active-account-manage', 'active open')
-@section('active-accounts', 'active')
+@section('active-product-manage', 'active open')
+@section('active-products', 'active')
 @section('title')
-    <title>Account Manage - List Accounts</title>
+    <title>Product Manage - List Products</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('css')
@@ -11,31 +11,31 @@
 @endsection
 @section('content')
     <!-- Striped Rows -->
-    @include('admin.partials.content-header', ['pages' => 'Account Manage', 'name' => 'Accounts'])
+    @include('admin.partials.content-header', ['pages' => 'Product Manage', 'name' => 'Products'])
     <ul class="nav nav-pills flex-column flex-md-row mb-3">
         @include('admin.partials.content-body', [
-            'permissions_list' => 'list-accounts',
+            'permissions_list' => 'list-products',
             'active_list' => 'active',
-            'models' => 'Accounts',
-            'url_list' => route('accounts.index'),
-            'class_list' => 'bx bx-user me-1',
-            'permission_create' => 'create-account',
+            'models' => 'Products',
+            'url_list' => route('products.index'),
+            'class_list' => 'bx bxl-product-hunt me-1',
+            'permission_create' => 'create-product',
             'active_create' => '',
-            'model' => 'Account',
-            'url_create' => route('accounts.create'),
-            'class_create' => 'bx bx-user-plus me-1'
+            'model' => 'Product',
+            'url_create' => route('products.create'),
+            'class_create' => 'bx bx-plus-circle me-1'
         ])
-        @if(auth()->user()->checkPermissionAccess('delete-account') == true)
+        @if(auth()->user()->checkPermissionAccess('delete-product') == true)
             <li class="nav-item">
                 <button id="deleteAllSelectedRecord" class="btn btn-outline-danger"
-                        data-url="{{ route('accounts.deleteSelected')}}">
-                    <i class="bx bx-trash me-1"></i>Delete Accounts
+                        data-url="{{ route('products.deleteSelected')}}">
+                    <i class="bx bx-trash me-1"></i>Delete Products
                 </button>
             </li>
         @endif
     </ul>
     <div class="card">
-        <h5 class="card-header">List Accounts</h5>
+        <h5 class="card-header">List Products</h5>
         <div class="col-sm-12">
             @include('admin.partials.alert')
         </div>
@@ -85,7 +85,7 @@
                 ],
                 ajax: {
                     type: 'get',
-                    url: '/api/admin/accounts',
+                    url: '/api/admin/products',
                 },
                 columns: [{
                     data: 'id',
@@ -119,21 +119,16 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>\
                                     </button>\
                                     <div class="dropdown-menu">\
-                                        @if(auth()->user()->checkPermissionAccess('edit-account'))\
-                                        <a class="dropdown-item" href=/admin/accounts/' + id + '/edit>\
+                                        @if(auth()->user()->checkPermissionAccess('edit-product'))\
+                                        <a class="dropdown-item" href=/admin/products/' + id + '/edit>\
                                                 <i class="bx bx-edit-alt me-1"></i> Edit\
                                             </a>\
                                         \
                                         @endif\
-                                        @if(auth()->user()->checkPermissionAccess('edit-account'))\
-                                          <a class="dropdown-item" href=/admin/accounts/' + id + '/change-password>\
-                                                <i class="bx bx-edit-alt me-1"></i> Change Password\
-                                            </a>\
-                                        @endif\
                                          @if(auth()->user()->checkPermissionAccess('delete-account'))\
                                             <form method="POST" class="action_delete"\
-                                                action=/admin/accounts/' + id + '/delete\
-                                                data-url=/admin/accounts/' + id + '/delete>\
+                                                action=/admin/products/' + id + '/delete\
+                                                data-url=/admin/products/' + id + '/delete>\
                                                 @csrf\
                                                 <input type="hidden" name="_method" value="DELETE" />\
                                                 <button class="dropdown-item" type="submit">\

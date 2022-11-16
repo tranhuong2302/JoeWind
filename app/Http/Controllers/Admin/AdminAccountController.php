@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Account\AccountRequest;
 use App\Repositories\Interfaces\Admin\IAccountRepository;
 use App\Repositories\Interfaces\Admin\IRoleRepository;
+use App\Traits\ApiResponse;
 use App\Traits\ToastNotification;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
@@ -19,6 +20,7 @@ class AdminAccountController extends Controller
 {
     use MediaAlly;
     use ToastNotification;
+    use ApiResponse;
 
     private $accountRepo;
     private $roleRepo;
@@ -186,6 +188,33 @@ class AdminAccountController extends Controller
             $this->toastError("Error change password account", "Error");
             Session::flash('error', $e->getMessage());
             return redirect()->back();
+        }
+    }
+
+    public function deleteAccountById($id)
+    {
+        try {
+            $this->accountRepo->deleteDataById($id);
+            return response()->json([
+                'status' => 'SUCCESS',
+                'message' => 'Delete account success',
+            ], 200);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
+    public function deleteSelected(Request $request)
+    {
+        try {
+            $ids = $request->get('ids');
+            $this->accountRepo->deleteMultipleData($ids);
+            return response()->json([
+                'status' => 'SUCCESS',
+                'message' => 'Delete selected account success',
+            ], 200);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage());
         }
     }
 }

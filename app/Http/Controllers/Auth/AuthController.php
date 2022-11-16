@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Repositories\Eloquent\Auth\AuthRepository;
+use App\Repositories\Interfaces\Auth\IAuthRepository;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -15,7 +14,7 @@ class AuthController extends Controller
 {
     private $authRepo;
 
-    public function __construct(AuthRepository $authRepository)
+    public function __construct(IAuthRepository $authRepository)
     {
         $this->authRepo = $authRepository;
     }
@@ -44,9 +43,9 @@ class AuthController extends Controller
     {
         try {
             $data = [
-                'name' => $registerRequest->username,
-                'email' => $registerRequest->email,
-                'password' => Hash::make($registerRequest->password),
+                'name' => $registerRequest->get('username'),
+                'email' => $registerRequest->get('email'),
+                'password' => Hash::make($registerRequest->get('password')),
                 'status' => 1,
             ];
             $this->authRepo->register($data);
@@ -61,13 +60,22 @@ class AuthController extends Controller
     {
         try {
             $credentials = [
-                'email' => $loginRequest->email,
-                'password' => $loginRequest->password,
+                'email' => $loginRequest->get('email'),
+                'password' => $loginRequest->get('password'),
             ];
             $remember = $loginRequest->has('remember-me');
             $user = $this->authRepo->login($credentials, $remember);
-            if ($user) return redirect()->route('admin.dashboard');
-            else return redirect()->back();
+            if ($user) {
+                if (auth()->user()->status == 0) {
+                    $this->authRepo->logout();
+                    Session::flash('error', "Your account is blocked");
+                    return redirect()->route('auth.login');
+                }
+                return redirect()->route('admin.dashboard');
+            } else {
+                Session::flash('error', "Wrong email or password. Please try again!");
+                return redirect()->route('auth.login');
+            }
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
             return redirect()->back();
@@ -76,7 +84,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::logout();
+        $this->authRepo->logout();
         return redirect()->route('auth.login');
     }
 }

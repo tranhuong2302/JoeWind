@@ -25,7 +25,7 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements ICate
     public function getSelectRecursivePermissions($parent_id)
     {
         $data = $this->category->all();
-        $recursive = new Recursive($data, '');
+        $recursive = new Recursive($data, '','');
         return $recursive->dataSelectRecursive($parent_id);
 
     }
@@ -33,7 +33,7 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements ICate
     public function getDataTableRecursivePermissions()
     {
         $data = $this->category->all();
-        $recursive = new Recursive($data, 'categories');
+        $recursive = new Recursive($data, 'categories','category');
         return $recursive->dataTableRecursive();
     }
 }

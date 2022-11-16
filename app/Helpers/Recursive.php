@@ -7,11 +7,13 @@ class Recursive
     private $data;
     private $html;
     private $stringUrl;
+    private $permission;
 
-    public function __construct($data, $stringUrl)
+    public function __construct($data, $stringUrl, $permission)
     {
         $this->data = $data;
         $this->stringUrl = $stringUrl;
+        $this->permission = $permission;
 
     }
 
@@ -49,25 +51,31 @@ class Recursive
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item"
+                                <div class="dropdown-menu">';
+                if (auth()->user()->checkPermissionAccess("edit-$this->permission")) {
+                    $this->html .= '<a class="dropdown-item"
                                         href="/admin/' . $this->stringUrl . '/' . $value->id . '/edit">
                                         <i class="bx bx-edit-alt me-1"></i> Edit
-                                    </a>
-                                    <form method="POST" class="action_deleteRecursive"
-                                          data-url="/api/admin/' . $this->stringUrl . '/' . $value->id . '/delete"
-                                          action="/api/admin/' . $this->stringUrl . '/' . $value->id . '/delete"
-                                    >
-                                       <input type="hidden" name="_token" value="' . csrf_token() . '"/>
-                                       <input type="hidden" name="_method" value="DELETE" />
-                                        <button class="dropdown-item" type="submit" >
-                                            <i class="bx bx-trash me-1"></i>Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
-                     </tr>';
+                                    </a>';
+                }
+                if (auth()->user()->checkPermissionAccess("delete-$this->permission")) {
+                    $this->html .= '   <form method = "POST" class="action_deleteRecursive"
+                                          data-url = "/admin/' . $this->stringUrl . '/' . $value->id . '/delete"
+                                          action = "/admin/' . $this->stringUrl . '/' . $value->id . '/delete"
+                                              >
+                                       <input type = "hidden" name = "_token" value = "' . csrf_token() . '" />
+                                       <input type = "hidden" name = "_method" value = "DELETE" />
+                                        <button class="dropdown-item" type = "submit" >
+                                            <i class="bx bx-trash me-1" ></i > Delete
+                                        </button >
+                                    </form >';
+                }
+                $this->html .= '
+
+                                </div >
+                            </div >
+                        </td >
+                     </tr > ';
                 $this->dataTableRecursive($value->id, $text . '--');
             }
         }

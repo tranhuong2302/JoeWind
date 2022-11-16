@@ -49,6 +49,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->name('accounts.editpassword')->middleware('can:edit-account');
         Route::put('{id}/change-password', [AdminAccountController::class, 'updatePassword'])
             ->name('accounts.updatepassword')->middleware('can:edit-account');
+        Route::delete('{id}/delete', [AdminAccountController::class, 'deleteAccountById'])
+            ->middleware('can:delete-account');
+        Route::delete('deleteSelected', [AdminAccountController::class, 'deleteSelected'])
+            ->middleware('can:delete-account')->name('accounts.deleteSelected');
     });
 
     Route::prefix('permissions')->group(function () {
@@ -62,6 +66,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:create-permission');
         Route::put('/{id}', [AdminPermissionController::class, 'update'])->name('permissions.update')
             ->middleware('can:edit-permission');
+        Route::delete('{id}/delete', [AdminPermissionController::class, 'deletePermissionById'])
+            ->middleware('can:delete-permission');
+        Route::delete('deleteSelected', [AdminPermissionController::class, 'deleteSelected'])
+            ->middleware('can:delete-permission')->name('permissions.deleteSelected');
     });
 
     Route::prefix('roles')->group(function () {
@@ -75,6 +83,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:create-role');
         Route::put('/{id}', [AdminRoleController::class, 'update'])->name('roles.update')
             ->middleware('can:edit-role');
+        Route::delete('{id}/delete', [AdminRoleController::class, 'deleteRoleById'])
+            ->middleware('can:delete-role');
+        Route::delete('deleteSelected', [AdminRoleController::class, 'deleteSelected'])
+            ->middleware('can:delete-role')->name('roles.deleteSelected');
     });
 
     Route::prefix('categories')->group(function () {
@@ -88,19 +100,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:create-category');
         Route::put('/{id}', [AdminCategoryController::class, 'update'])->name('categories.update')
             ->middleware('can:edit-category');
-    });
-
-    Route::prefix('categories')->group(function () {
-        Route::get('/', [AdminCategoryController::class, 'index'])->name('categories.index')
-            ->middleware('can:categories-list');
-        Route::get('/create', [AdminCategoryController::class, 'create'])->name('categories.create')
-            ->middleware('can:create-category');
-        Route::get('{id}/edit', [AdminCategoryController::class, 'edit'])->name('categories.edit')
-            ->middleware('can:edit-category');
-        Route::post('/store', [AdminCategoryController::class, 'store'])->name('categories.store')
-            ->middleware('can:create-category');
-        Route::put('/{id}', [AdminCategoryController::class, 'update'])->name('categories.update')
-            ->middleware('can:edit-category');
+        Route::delete('{id}/delete', [AdminCategoryController::class, 'deleteCategoryById'])
+            ->middleware('can:delete-category');
+        Route::delete('deleteSelected', [AdminCategoryController::class, 'deleteSelected'])
+            ->middleware('can:delete-category')->name('categories.deleteSelected');
     });
 
     Route::prefix('products')->group(function () {
@@ -114,5 +117,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:create-product');
         Route::put('/{id}', [AdminProductController::class, 'update'])->name('products.update')
             ->middleware('can:edit-product');
+        Route::delete('{id}/delete', [AdminProductController::class, 'deleteProductById'])
+            ->middleware('can:delete-product');
+        Route::delete('deleteSelected', [AdminProductController::class, 'deleteSelected'])
+            ->middleware('can:delete-product')->name('products.deleteSelected');
     });
 });

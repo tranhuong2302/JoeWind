@@ -24,4 +24,7 @@ class AuthRepository implements IAuthRepository
     {
         return $this->user->create($credentials);
     }
+    public function logout(){
+        return Auth::logout();
+    }
 }

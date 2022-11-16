@@ -10,7 +10,7 @@ return [
         'list_roles' => 'list-roles',
         'create_role' => 'create-role',
         'edit_role' => 'edit-role',
-        'delete-role' => 'delete_role',
+        'delete_role' => 'delete-role',
 
         'list_permissions' => 'list-permissions',
         'create_permission' => 'create-permission',

@@ -35,6 +35,16 @@ function actionDelete(event) {
                         )
 
                     }
+                },
+                error: function () {
+                    toastr.error('Delete error', 'Error',
+                        {
+                            closeButton: true,
+                            progressBar: true,
+                            newestOnTop: true,
+                            timeOut: "3000",
+                        }
+                    )
                 }
             });
         }
@@ -74,6 +84,16 @@ function actionDeleteRecursive(event) {
                         )
 
                     }
+                },
+                error: function () {
+                    toastr.error('Delete error', 'Error',
+                        {
+                            closeButton: true,
+                            progressBar: true,
+                            newestOnTop: true,
+                            timeOut: "3000",
+                        }
+                    )
                 }
             });
         }
@@ -121,6 +141,16 @@ function actionDeleteMultiple(event) {
                             }
                         )
                     }
+                },
+                error: function () {
+                    toastr.error('Delete selected error', 'Error',
+                        {
+                            closeButton: true,
+                            progressBar: true,
+                            newestOnTop: true,
+                            timeOut: "3000",
+                        }
+                    )
                 }
             });
         }
@@ -168,6 +198,16 @@ function actionDeleteMultipleRecursive(event) {
                             }
                         )
                     }
+                },
+                error: function () {
+                    toastr.error('Delete selected error', 'Error',
+                        {
+                            closeButton: true,
+                            progressBar: true,
+                            newestOnTop: true,
+                            timeOut: "3000",
+                        }
+                    )
                 }
             });
         }
@@ -177,7 +217,7 @@ function actionDeleteMultipleRecursive(event) {
 $(function () {
     $(".checkBoxAll").click(checkBoxAll);
     $('#table-dataTable').on('click', 'form.action_delete', actionDelete);
-    $('#table-dataTableRecursive').on('click','form.action_deleteRecursive', actionDeleteRecursive);
+    $('#table-dataTableRecursive').on('click', 'form.action_deleteRecursive', actionDeleteRecursive);
     $("#deleteAllSelectedRecord").click(actionDeleteMultiple);
     $("#deleteAllSelectedRecordRecursive").click(actionDeleteMultipleRecursive);
 });

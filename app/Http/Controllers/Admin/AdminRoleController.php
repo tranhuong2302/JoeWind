@@ -6,14 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Role\RoleRequest;
 use App\Repositories\Interfaces\Admin\IPermissionRepository;
 use App\Repositories\Interfaces\Admin\IRoleRepository;
+use App\Traits\ApiResponse;
 use App\Traits\ToastNotification;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminRoleController extends Controller
 {
     use ToastNotification;
+    use ApiResponse;
 
     private $roleRepo;
     private $permissionRepo;
@@ -97,6 +100,33 @@ class AdminRoleController extends Controller
             $this->toastError("Error update roles", "Error");
             Session::flash('error', $e->getMessage());
             return redirect()->back();
+        }
+    }
+
+    public function deleteRoleById($id)
+    {
+        try {
+            $this->roleRepo->deleteDataById($id);
+            return response()->json([
+                'status' => 'SUCCESS',
+                'message' => 'Delete role success',
+            ], 200);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
+    public function deleteSelected(Request $request)
+    {
+        try {
+            $ids = $request->get('ids');
+            $this->roleRepo->deleteMultipleData($ids);
+            return response()->json([
+                'status' => 'SUCCESS',
+                'message' => 'Delete selected role success',
+            ], 200);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage());
         }
     }
 }

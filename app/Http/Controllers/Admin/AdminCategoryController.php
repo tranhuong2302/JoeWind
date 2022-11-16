@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Category\CategoryRequest;
 use App\Repositories\Interfaces\Admin\ICategoryRepository;
+use App\Traits\ApiResponse;
 use App\Traits\ToastNotification;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
@@ -12,11 +13,13 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminCategoryController extends Controller
 {
     use ToastNotification;
     use MediaAlly;
+    use ApiResponse;
 
     private $categoryRepo;
 
@@ -126,6 +129,33 @@ class AdminCategoryController extends Controller
             $this->toastError("Error updating category", "Error");
             Session::flash('error', $e->getMessage());
             return redirect()->back();
+        }
+    }
+
+    public function deleteCategoryById($id)
+    {
+        try {
+            $this->categoryRepo->deleteDataById($id);
+            return response()->json([
+                'status' => 'SUCCESS',
+                'message' => 'Delete category success',
+            ], 200);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
+    public function deleteSelected(Request $request)
+    {
+        try {
+            $ids = $request->get('ids');
+            $this->categoryRepo->deleteMultipleData($ids);
+            return response()->json([
+                'status' => 'SUCCESS',
+                'message' => 'Delete selected category success',
+            ], 200);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage());
         }
     }
 }
