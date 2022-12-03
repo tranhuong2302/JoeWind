@@ -80,17 +80,17 @@
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()->checkPermissionAccess('list-roles') == true)
-                    <li class="menu-item @yield('active-roles')">
-                        <a href="{{route('roles.index')}}" class="menu-link">
-                            <div data-i18n="Roles">Roles</div>
-                        </a>
-                    </li>
-                @endif
                 @if(auth()->user()->checkPermissionAccess('list-permissions') == true)
                     <li class="menu-item @yield('active-permissions')">
                         <a href="{{route('permissions.index')}}" class="menu-link">
                             <div data-i18n="Permissions">Permissions</div>
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()->checkPermissionAccess('list-roles') == true)
+                    <li class="menu-item @yield('active-roles')">
+                        <a href="{{route('roles.index')}}" class="menu-link">
+                            <div data-i18n="Roles">Roles</div>
                         </a>
                     </li>
                 @endif
@@ -102,20 +102,27 @@
                 <div data-i18n="Product Manage">Product Manage</div>
             </a>
             <ul class="menu-sub">
-                @if(auth()->user()->checkPermissionAccess('list-categories') == true)
-                    <li class="menu-item  @yield('active-categories')">
-                        <a href="{{route('categories.index')}}" class="menu-link">
-                            <div data-i18n="Category">Category</div>
+                @if(auth()->user()->checkPermissionAccess('list-attributes') == true)
+                    <li class="menu-item  @yield('active-attributes')">
+                        <a href="{{route('attributes.index')}}" class="menu-link">
+                            <div data-i18n="Attribute">Attributes</div>
                         </a>
                     </li>
                 @endif
-                    @if(auth()->user()->checkPermissionAccess('list-products') == true)
-                        <li class="menu-item  @yield('active-products')">
-                            <a href="{{route('products.index')}}" class="menu-link">
-                                <div data-i18n="Product">Product</div>
-                            </a>
-                        </li>
-                    @endif
+                @if(auth()->user()->checkPermissionAccess('list-categories') == true)
+                    <li class="menu-item  @yield('active-categories')">
+                        <a href="{{route('categories.index')}}" class="menu-link">
+                            <div data-i18n="Category">Categories</div>
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()->checkPermissionAccess('list-products') == true)
+                    <li class="menu-item  @yield('active-products')">
+                        <a href="{{route('products.index')}}" class="menu-link">
+                            <div data-i18n="Product">Products</div>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </li>
         <li class="menu-item">

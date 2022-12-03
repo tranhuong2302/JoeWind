@@ -9,4 +9,6 @@ interface IAuthRepository
     public function register($credentials);
 
     public function logout();
+
+    public function checkExistsByEmail($email);
 }

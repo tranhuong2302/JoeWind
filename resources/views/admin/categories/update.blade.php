@@ -92,12 +92,73 @@
                                 </select>
                             </div>
                             <div class="mb-3 col-md-12">
+                                <label for="sort_order" class="form-label">Category Sort</label>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    id="sort_order"
+                                    name="sort_order"
+                                    value="{{$category->sort_order}}"
+                                    placeholder="Enter Category sort number"
+                                />
+                            </div>
+                            <div class="mb-3 col-md-12">
                                 <label for="description" class="form-label">Category Description</label>
                                 <div class="input-group">
                                     <span class="input-group-text">Description</span>
                                     <textarea id="description" name="description" class="form-control"
                                               aria-label="Description" placeholder="Enter description">{{$category->description}}
                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label d-block">Status</label>
+                                <div class="form-check form-check-inline mt-3">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="status"
+                                        id="active"
+                                        value="1"
+                                        {{$category->status == 1 ? 'checked' : ''}}
+                                    />
+                                    <label class="form-check-label" for="active">Active</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="status"
+                                        id="block"
+                                        value="0"
+                                        {{$category->status == 0 ? 'checked' : ''}}
+                                    />
+                                    <label class="form-check-label" for="block">Block</label>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label d-block">Is Feature?</label>
+                                <div class="form-check form-check-inline mt-3">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="is_feature"
+                                        id="on"
+                                        value="1"
+                                        {{$category->is_feature == 1 ? 'checked' : ''}}
+                                    />
+                                    <label class="form-check-label" for="on">On</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="is_feature"
+                                        id="off"
+                                        value="0"
+                                        {{$category->is_feature == 0 ? 'checked' : ''}}
+                                    />
+                                    <label class="form-check-label" for="off">Off</label>
                                 </div>
                             </div>
                         </div>

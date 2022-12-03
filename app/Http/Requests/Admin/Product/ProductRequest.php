@@ -24,7 +24,31 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'price' => 'required',
+            'discount' => 'required',
+            'quantity' => 'required',
+            'attribute_value' => 'required',
+            'category_id' => 'required',
+            'image_path' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+            'is_feature' => 'required',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'name.required' => 'Name is required!',
+            'price.required' => 'Price is required!',
+            'discount.required' => 'Discount is required!',
+            'quantity.required' => 'Quantity is required!',
+            'attribute_value.required' => 'Attribute Value is required!',
+            'category_id.required' => 'Category is required!',
+            'image_path.required' => 'Image is required!',
+            'description.required' => 'Description is required!',
+            'status.required' => 'Status is required!',
+            'is_feature.required' => 'Is Featured is required!',
         ];
     }
 }

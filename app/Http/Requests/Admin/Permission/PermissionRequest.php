@@ -25,6 +25,17 @@ class   PermissionRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'display_name' => 'required',
+            'parent_id' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Name is required!',
+            'display_name.required' => 'Display name is required!',
+            'parent_id.required' => 'Parent is required!',
         ];
     }
 }

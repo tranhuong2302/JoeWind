@@ -25,10 +25,18 @@ class AccountRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|max:255',
             'phone' => 'required',
-            'address' => 'required',
             'status' => 'required',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'name.required' => 'Name is required',
+            'email.required' => 'Email is required!',
+            'phone.required' => 'Phone is required!',
+            'status.required' => 'Status is required!'
         ];
     }
 }

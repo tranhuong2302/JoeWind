@@ -28,4 +28,10 @@ class RoleRequest extends FormRequest
             'display_name' => 'required',
         ];
     }
+    public function messages(){
+        return [
+            'name.required' => 'Name is required!',
+            'display_name.required' => 'Display name is required!',
+        ];
+    }
 }

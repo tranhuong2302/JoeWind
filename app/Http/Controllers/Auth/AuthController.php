@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    private $authRepo;
+    private IAuthRepository $authRepo;
 
     public function __construct(IAuthRepository $authRepository)
     {
@@ -43,12 +43,16 @@ class AuthController extends Controller
     {
         try {
             $data = [
-                'name' => $registerRequest->get('username'),
-                'email' => $registerRequest->get('email'),
+                'name' => $registerRequest->input('username'),
+                'email' => $registerRequest->input('email'),
                 'password' => Hash::make($registerRequest->get('password')),
                 'status' => 1,
             ];
-            $this->authRepo->register($data);
+            $checkExistsByEmail = $this->authRepo->checkExistsByEmail($registerRequest->input('email'));
+            if ($checkExistsByEmail != null) {
+                Session::flash('error', "Email is exists");
+                return redirect()->back();
+            } else $this->authRepo->register($data);
             return view('auth.login.auth-login');
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
@@ -60,8 +64,8 @@ class AuthController extends Controller
     {
         try {
             $credentials = [
-                'email' => $loginRequest->get('email'),
-                'password' => $loginRequest->get('password'),
+                'email' => $loginRequest->input('email'),
+                'password' => $loginRequest->input('password'),
             ];
             $remember = $loginRequest->has('remember-me');
             $user = $this->authRepo->login($credentials, $remember);

@@ -82,30 +82,38 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="userName" class="form-label">Username</label>
-                                <input
-                                    class="form-control"
-                                    type="text"
-                                    id="userName"
-                                    name="name"
-                                    value="{{$account->name}}"
-                                    placeholder="Enter your username"
-                                    autofocus
-                                />
+                                <div class="input-group">
+                                    <span  class="input-group-text"><i class="bx bx-user"></i></span>
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        id="userName"
+                                        name="name"
+                                        value="{{$account->name}}"
+                                        placeholder="Enter your username"
+                                        autofocus
+                                    />
+                                </div>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="email" class="form-label">E-mail</label>
-                                <input
-                                    class="form-control"
-                                    type="text"
-                                    id="email"
-                                    name="email"
-                                    value="{{$account->email}}"
-                                    placeholder="Enter your email"
-                                />
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        id="email"
+                                        name="email"
+                                        value="{{$account->email}}"
+                                        placeholder="Enter your email"
+                                    />
+                                    <span class="input-group-text">@example.com</span>
+                                </div>
                             </div>
-                            <div class="mb-3 col-md-6">
+                            <div class="mb-3 col-md-12">
                                 <label class="form-label" for="phoneNumber">Phone Number</label>
-                                <div class="input-group input-group-merge">
+                                <div class="input-group">
+                                    <span id="basic-icon-default-phone2" class="input-group-text"><i class="bx bx-phone"></i></span>
                                     <input
                                         type="text"
                                         id="phoneNumber"
@@ -117,36 +125,38 @@
                                 </div>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" name="address"
-                                       value="{{$account->address}}"
-                                       placeholder="Address"/>
-                            </div>
-                            <div class="mb-3 col-md-12">
                                 <label for="floatingSelect2" class="form-label">Roles</label>
                                 <select name="role_id[]" id="floatingSelect2" class="form-control selectRoles"
                                         multiple="multiple">
                                     @foreach($roles as $role)
                                         <option {{$rolesOfUser->contains('id', $role->id) ? 'selected' : ''}}
-                                            value="{{$role->id}}">{{$role->name}}</option>
+                                                value="{{$role->id}}">{{$role->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="status" class="form-label pe-2">Status</label>
-                                <div class="btn-group" role="group">
+                                <label class="form-label d-block">Status</label>
+                                <div class="form-check form-check-inline mt-3">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         name="status"
-                                        id="radioActive"
-                                        checked
+                                        id="active"
                                         value="1"
                                         {{$account->status == 1 ? 'checked' : ''}}
                                     />
-                                    <label class="pe-3" for="radioActive">Active</label>
-                                    <input type="radio" name="status" id="radioBlock"
-                                           value="0" {{$account->status == 0 ? 'checked' : ''}}/>
-                                    <label for="radioBlock">Block</label>
+                                    <label class="form-check-label" for="active">Active</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="status"
+                                        id="block"
+                                        value="0"
+                                        {{$account->status == 0 ? 'checked' : ''}}
+                                    />
+                                    <label class="form-check-label" for="block">Block</label>
                                 </div>
                             </div>
                         </div>

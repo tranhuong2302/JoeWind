@@ -6,7 +6,16 @@ use App\Repositories\Interfaces\IBaseRepository;
 
 interface ICategoryRepository extends IBaseRepository
 {
-    public function getPermissionRoots();
+    public function getCategoryRoots();
 
-    public function getSelectRecursivePermissions($parent_id);
+    public function getApiCategoriesRecursive();
+
+    public function getSelectRecursiveCategory($parent_id);
+
+    public function getMultiSelectRecursiveCategory($catsId);
+
+    public function checkUpdateCategoryToChild($categoryChild_id, $category_id);
+
+    public function checkUpdateCategoryToItSelf($categorySelf_id, $category_id);
+
 }

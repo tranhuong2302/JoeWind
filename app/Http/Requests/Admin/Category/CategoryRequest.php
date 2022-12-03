@@ -25,7 +25,23 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'parent_id' => 'required',
+            'sort_order' => 'required',
             'description' => 'required',
+            'status' => 'required',
+            'is_feature' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Name is required!',
+            'parent_id.required' => 'Parent is required!',
+            'sort_order.required' => 'Sort is required!',
+            'description.required' => 'Description is required!',
+            'status.required' => 'Status is required!',
+            'is_feature.required' => 'Is Feature is required!',
         ];
     }
 }

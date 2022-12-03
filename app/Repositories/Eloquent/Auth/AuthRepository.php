@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthRepository implements IAuthRepository
 {
-    protected $user;
+    protected User $user;
 
     public function __construct(User $user)
     {
@@ -26,5 +26,9 @@ class AuthRepository implements IAuthRepository
     }
     public function logout(){
         return Auth::logout();
+    }
+    public function checkExistsByEmail($email)
+    {
+        return $this->user->where('email', $email)->first();
     }
 }

@@ -99,7 +99,7 @@
                     {
                         data: "image_path",
                         'render': function (url) {
-                            if (url) return '<img class="rounded-circle" width="50" height="50" src=' + url + '>'
+                            if (url) return '<img class="rounded-circle" width="50" height="50" alt="" src=' + url + '>'
                             else return '<img class="rounded-circle" width="50" height="50" src={{asset('admin/assets/img/avatars/baseAvatar.png')}}>'
                         }
                     },

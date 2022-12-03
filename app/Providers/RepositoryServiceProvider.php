@@ -3,12 +3,16 @@
 namespace App\Providers;
 
 use App\Repositories\Eloquent\Admin\EloquentAccountRepository;
+use App\Repositories\Eloquent\Admin\EloquentAttributeRepository;
+use App\Repositories\Eloquent\Admin\EloquentAttributeValueRepository;
 use App\Repositories\Eloquent\Admin\EloquentCategoryRepository;
 use App\Repositories\Eloquent\Admin\EloquentPermissionRepository;
 use App\Repositories\Eloquent\Admin\EloquentProductRepository;
 use App\Repositories\Eloquent\Admin\EloquentRoleRepository;
 use App\Repositories\Eloquent\Auth\AuthRepository;
 use App\Repositories\Interfaces\Admin\IAccountRepository;
+use App\Repositories\Interfaces\Admin\IAttributeRepository;
+use App\Repositories\Interfaces\Admin\IAttributeValueRepository;
 use App\Repositories\Interfaces\Admin\ICategoryRepository;
 use App\Repositories\Interfaces\Admin\IPermissionRepository;
 use App\Repositories\Interfaces\Admin\IProductRepository;
@@ -31,6 +35,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(IProductRepository::class, EloquentProductRepository::class);
         $this->app->singleton(IRoleRepository::class, EloquentRoleRepository::class);
         $this->app->singleton(IAuthRepository::class, AuthRepository::class);
+        $this->app->singleton(IAttributeRepository::class, EloquentAttributeRepository::class);
+        $this->app->singleton(IAttributeValueRepository::class, EloquentAttributeValueRepository::class);
     }
 
     /**

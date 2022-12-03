@@ -53,10 +53,10 @@ class AdminPermissionController extends Controller
         try {
             DB::BeginTransaction();
             $data = [
-                'name' => $request->get('name'),
-                'display_name' => $request->get('display_name'),
-                'parent_id' => $request->get('parent_id'),
-                'keycode' => Str::slug($request->get('name'))
+                'name' => $request->input('name'),
+                'display_name' => $request->input('display_name'),
+                'parent_id' => $request->input('parent_id'),
+                'keycode' => Str::slug($request->input('name'))
             ];
             $permission = $this->permissionRepo->createData($data);
             if ($permission) {
@@ -89,12 +89,18 @@ class AdminPermissionController extends Controller
         try {
             DB::BeginTransaction();
             $data = [
-                'name' => $request->get('name'),
-                'display_name' => $request->get('display_name'),
-                'parent_id' => $request->get('parent_id'),
-                'keycode' => Str::slug($request->get('name'))
+                'name' => $request->input('name'),
+                'display_name' => $request->input('display_name'),
+                'parent_id' => $request->input('parent_id'),
+                'keycode' => Str::slug($request->input('name'))
             ];
-            $permission = $this->permissionRepo->updateDataById($id, $data);
+            if ($this->permissionRepo->checkUpdatePermissionToChild($request->input('parent_id'), $id)) {
+                $this->toastWarning("Unable to edit permission on its children", "Warning");
+                return redirect()->back();
+            } else if ($this->permissionRepo->checkUpdatePermissionToItSelf($request->input('parent_id'), $id)) {
+                $this->toastWarning("Unable to edit permission on it self", "Warning");
+                return redirect()->back();
+            } else $permission = $this->permissionRepo->updateDataById($id, $data);
             if ($permission) {
                 $this->toastSuccess("Updated permission successfully", "Success");
                 DB::commit();

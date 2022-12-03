@@ -6,5 +6,5 @@ use App\Repositories\Interfaces\IBaseRepository;
 
 interface IAccountRepository extends IBaseRepository
 {
-    public function changePassword($id, $request);
+    public function checkExistsByEmail($email);
 }

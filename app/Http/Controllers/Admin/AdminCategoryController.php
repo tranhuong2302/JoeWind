@@ -10,10 +10,10 @@ use App\Traits\ToastNotification;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\Request;
 
 class AdminCategoryController extends Controller
 {
@@ -31,7 +31,7 @@ class AdminCategoryController extends Controller
     public function index()
     {
         try {
-            $html = $this->categoryRepo->getDataTableRecursivePermissions();
+            $html = $this->categoryRepo->getDataTableRecursiveCategories();
             return view('admin.categories.index', compact('html'));
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
@@ -43,7 +43,7 @@ class AdminCategoryController extends Controller
     public function create()
     {
         try {
-            $htmlOptions = $this->categoryRepo->getSelectRecursivePermissions(0);
+            $htmlOptions = $this->categoryRepo->getSelectRecursiveCategory(0);
             return view('admin.categories.add', compact('htmlOptions'));
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
@@ -56,10 +56,13 @@ class AdminCategoryController extends Controller
         try {
             DB::BeginTransaction();
             $data = [
-                'name' => $request->get('name'),
-                'parent_id' => $request->get('parent_id'),
-                'description' => $request->get('description'),
-                'slug' => Str::slug($request->get('name'))
+                'name' => $request->input('name'),
+                'parent_id' => $request->input('parent_id'),
+                'description' => $request->input('description'),
+                'slug' => Str::slug($request->input('name')),
+                'status' => $request->input('status'),
+                'is_feature' => $request->input('is_feature'),
+                'sort_order' => $request->input('sort_order'),
             ];
             $image_path = $request->hasFile('image_path');
             if ($image_path) {
@@ -89,7 +92,7 @@ class AdminCategoryController extends Controller
     {
         try {
             $category = $this->categoryRepo->findDataById($id);
-            $htmlOptions = $this->categoryRepo->getSelectRecursivePermissions($category->parent_id);
+            $htmlOptions = $this->categoryRepo->getSelectRecursiveCategory($category->parent_id);
             return view('admin.categories.update', compact('category', 'htmlOptions'));
         } catch (Exception $e) {
             Session::flash('error', $e->getMessage());
@@ -102,10 +105,13 @@ class AdminCategoryController extends Controller
         try {
             DB::BeginTransaction();
             $data = [
-                'name' => $request->get('name'),
-                'parent_id' => $request->get('parent_id'),
-                'description' => $request->get('description'),
-                'slug' => Str::slug($request->get('name'))
+                'name' => $request->input('name'),
+                'parent_id' => $request->input('parent_id'),
+                'description' => $request->input('description'),
+                'slug' => Str::slug($request->input('name')),
+                'status' => $request->get('status'),
+                'is_feature' => $request->input('is_feature'),
+                'sort_order' => $request->input('sort_order'),
             ];
             $image_path = $request->hasFile('image_path');
             if ($image_path) {
@@ -117,7 +123,15 @@ class AdminCategoryController extends Controller
                     $data['image_path'] = $uploadedFileUrl;
                 }
             }
-            $category = $this->categoryRepo->updateDataById($id, $data);
+            if($this->categoryRepo->checkUpdateCategoryToChild($request->input('parent_id'), $id)){
+                $this->toastWarning("Unable to edit category on its children", "Warning");
+                return redirect()->back();
+            }
+            else if($this->categoryRepo->checkUpdateCategoryToItSelf($request->input('parent_id'), $id)){
+                $this->toastWarning("Unable to edit category on it self", "Warning");
+                return redirect()->back();
+            }
+            else $category = $this->categoryRepo->updateDataById($id, $data);
             if ($category) {
                 $this->toastSuccess("Updated category successfully", "Success");
                 DB::commit();
@@ -148,7 +162,7 @@ class AdminCategoryController extends Controller
     public function deleteSelected(Request $request)
     {
         try {
-            $ids = $request->get('ids');
+            $ids = $request->input('ids');
             $this->categoryRepo->deleteMultipleData($ids);
             return response()->json([
                 'status' => 'SUCCESS',

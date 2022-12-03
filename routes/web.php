@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAccountController;
+use App\Http\Controllers\Admin\AdminAttributeController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminProductController;
@@ -102,12 +103,11 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:edit-category');
         Route::delete('{id}/delete', [AdminCategoryController::class, 'deleteCategoryById'])
             ->middleware('can:delete-category');
-        Route::delete('deleteSelected', [AdminCategoryController::class, 'deleteSelected'])
-            ->middleware('can:delete-category')->name('categories.deleteSelected');
+        Route::delete('deleteSelected', [AdminCategoryController::class, 'deleteSelected'])->name('categories.deleteSelected');
     });
 
     Route::prefix('products')->group(function () {
-        Route::get('/', [AdminCategoryController::class, 'index'])->name('products.index')
+        Route::get('/', [AdminProductController::class, 'index'])->name('products.index')
             ->middleware('can:products-list');
         Route::get('/create', [AdminProductController::class, 'create'])->name('products.create')
             ->middleware('can:create-product');
@@ -121,5 +121,23 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:delete-product');
         Route::delete('deleteSelected', [AdminProductController::class, 'deleteSelected'])
             ->middleware('can:delete-product')->name('products.deleteSelected');
+    });
+
+    Route::prefix('attributes')->group(function () {
+        Route::get('/', [AdminAttributeController::class, 'index'])->name('attributes.index')
+            ->middleware('can:attributes-list');
+        Route::get('/create', [AdminAttributeController::class, 'create'])->name('attributes.create')
+            ->middleware('can:create-attribute');
+        Route::get('{id}/edit', [AdminAttributeController::class, 'edit'])->name('attributes.edit')
+            ->middleware('can:edit-attribute');
+        Route::post('/store', [AdminAttributeController::class, 'store'])->name('attributes.store')
+            ->middleware('can:create-attribute');
+        Route::put('/{id}', [AdminAttributeController::class, 'update'])->name('attributes.update')
+            ->middleware('can:edit-attribute');
+        Route::delete('{id}/delete', [AdminAttributeController::class, 'deleteAttributeById'])
+            ->middleware('can:delete-attribute');
+        Route::delete('{id}/attribute_value/delete', [AdminAttributeController::class, 'deleteAttributeValueById'])
+            ->middleware('can:delete-attribute')->name('attributes.delete-attributeValue');
+        Route::delete('deleteSelected', [AdminAttributeController::class, 'deleteSelected'])->name('attributes.deleteSelected');
     });
 });

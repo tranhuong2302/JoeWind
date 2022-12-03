@@ -26,6 +26,11 @@ return [
         'create_product' => 'create-product',
         'edit_product' => 'edit-product',
         'delete_product' => 'delete-product',
+
+        'list_attributes' => 'list-attributes',
+        'create_attribute' => 'create-attribute',
+        'edit_attribute' => 'edit-attribute',
+        'delete_attribute' => 'delete-attribute'
     ],
 
     'module_table' => [

@@ -25,7 +25,7 @@ class EloquentPermissionRepository extends EloquentBaseRepository implements IPe
     public function getSelectRecursivePermissions($parent_id)
     {
         $data = $this->permission->all();
-        $recursive = new Recursive($data,'','');
+        $recursive = new Recursive($data, '', '');
         return $recursive->dataSelectRecursive($parent_id);
 
     }
@@ -33,7 +33,21 @@ class EloquentPermissionRepository extends EloquentBaseRepository implements IPe
     public function getDataTableRecursivePermissions()
     {
         $data = $this->permission->all();
-        $recursive = new Recursive($data,'permissions','permission');
+        $recursive = new Recursive($data, 'permissions', 'permission');
         return $recursive->dataTableRecursive();
+    }
+
+    public function checkUpdatePermissionToChild($permissionChild_id, $permission_id)
+    {
+        $permission = $this->permission->find($permissionChild_id);
+        if ($permission != null && $permission->parent_id == $permission_id) return true;
+        else return false;
+    }
+
+    public function checkUpdatePermissionToItSelf($permissionSelf_id, $permission_id)
+    {
+        $permission = $this->permission->find($permissionSelf_id);
+        if ($permission != null && $permission->id == $permission_id) return true;
+        else return false;
     }
 }

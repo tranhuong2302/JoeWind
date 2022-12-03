@@ -6,11 +6,11 @@ interface IBaseRepository
 {
     public function getAll();
 
-    public function createData(array $attributes);
+    public function createData($attributes = []);
 
     public function findDataById($id);
 
-    public function updateDataById($id, array $attributes);
+    public function updateDataById($id, $attributes = []);
 
     public function deleteDataById($id);
 

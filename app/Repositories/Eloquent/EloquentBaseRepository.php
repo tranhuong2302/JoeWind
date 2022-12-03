@@ -19,7 +19,7 @@ class EloquentBaseRepository implements IBaseRepository
         return $this->model->all();
     }
 
-    public function createData(array $attributes)
+    public function createData($attributes = [])
     {
         return $this->model->create($attributes);
     }
@@ -29,7 +29,7 @@ class EloquentBaseRepository implements IBaseRepository
         return $this->model->find($id);
     }
 
-    public function updateDataById($id, array $attributes)
+    public function updateDataById($id, $attributes = [])
     {
         $data = $this->model->find($id);
         if ($data) {

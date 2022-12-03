@@ -46,10 +46,12 @@
                     <th scope="col"><input type="checkbox" name="ids" class="form-check-input checkBoxAll" value="">
                     </th>
                     <th scope="col">ID</th>
-                    <th scope="col">Email</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Avatar</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Discount</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Feature</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -78,6 +80,7 @@
         $(document).ready(function () {
             $('#table-dataTable').DataTable({
                 processing: true,
+                responsive: true,
                 lengthChange: false,
                 dom: 'Bfrtip',
                 buttons: [
@@ -88,26 +91,37 @@
                     url: '/api/admin/products',
                 },
                 columns: [{
-                    data: 'id',
+                    data: "id",
                     'render': function (id) {
                         return '<input type="checkbox" name="ids" class="form-check-input checkBoxClass" value=' + id + '>'
                     }
                 },
                     {data: "id"},
-                    {data: "email"},
-                    {data: "name"},
-                    {
-                        data: "image_path",
+                    {data: "name", width: '50px'},
+                    {data: "image_path",
                         'render': function (url) {
                             if (url) return '<img class="rounded-circle" width="50" height="50" src=' + url + '>'
                             else return '<img class="rounded-circle" width="50" height="50" src={{asset('admin/assets/img/avatars/baseAvatar.png')}}>'
                         }
                     },
+                    {data: "price",
+                        'render': function(price){
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+                        }
+                    },
+                    {data: "discount"},
                     {
                         data: "status",
                         'render': function (status) {
                             if (status === 1) return '<span class="badge bg-label-primary me-1">Active</span>'
                             else return '<span class="badge bg-label-danger me-1">Block</span>'
+                        }
+                    },
+                    {
+                        data: "is_feature",
+                        'render': function (status) {
+                            if (status === 1) return '<span class="badge bg-label-info me-1">On</span>'
+                            else return '<span class="badge bg-label-warning me-1">Off</span>'
                         }
                     },
                     {
@@ -145,5 +159,4 @@
             });
         });
     </script>
-
 @endsection

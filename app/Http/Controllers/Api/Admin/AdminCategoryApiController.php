@@ -22,7 +22,7 @@ class AdminCategoryApiController extends Controller
     public function getApiCategories()
     {
         try {
-            $permissions = $this->categoryRepo->getAll();
+            $permissions = $this->categoryRepo->getApiCategoriesRecursive();
             return $this->successResponse($permissions, "Get categories success");
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage());

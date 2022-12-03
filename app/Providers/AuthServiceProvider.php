@@ -94,5 +94,19 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete-product', function ($user) {
             return $user->checkPermissionAccess(config('permissions.access.delete_product'));
         });
+
+        //Attribute
+        Gate::define('attributes-list', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.list_attributes'));
+        });
+        Gate::define('create-attribute', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.create_attribute'));
+        });
+        Gate::define('edit-attribute', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.edit_attribute'));
+        });
+        Gate::define('delete-attribute', function ($user) {
+            return $user->checkPermissionAccess(config('permissions.access.delete_attribute'));
+        });
     }
 }

@@ -58,12 +58,11 @@ class AdminAccountController extends Controller
         try {
             DB::BeginTransaction();
             $data = [
-                'name' => $request->get('name'),
-                'email' => $request->get('email'),
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
                 'password' => Hash::make(1),
-                'phone' => $request->get('phone'),
-                'address' => $request->get('address'),
-                'status' => $request->get('status'),
+                'phone' => $request->input('phone'),
+                'status' => $request->input('status'),
             ];
             $image_path = $request->hasFile('image_path');
             if ($image_path) {
@@ -75,7 +74,12 @@ class AdminAccountController extends Controller
                     $data['image_path'] = $uploadedFileUrl;
                 }
             }
-            $account = $this->accountRepo->createData($data);
+            $checkExistsByEmail = $this->accountRepo->checkExistsByEmail($request->input('email'));
+            if($checkExistsByEmail != null){
+                $this->toastWarning("Email is exists", "Warning");
+                return redirect()->back();
+            }
+            else $account = $this->accountRepo->createData($data);
             //2 cách thêm mảng
             $roleIds = $request->get('role_id');
             // C1 truyền thống
@@ -120,7 +124,6 @@ class AdminAccountController extends Controller
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
                 'phone' => $request->get('phone'),
-                'address' => $request->get('address'),
                 'status' => $request->get('status'),
 
             ];
@@ -134,7 +137,12 @@ class AdminAccountController extends Controller
                     $data['image_path'] = $uploadedFileUrl;
                 }
             }
-            $account = $this->accountRepo->updateDataById($id, $data);
+            $checkExistsByEmail = $this->accountRepo->checkExistsByEmail($request->input('email'));
+            if($checkExistsByEmail != null){
+                $this->toastWarning("Email is exists", "Warning");
+                return redirect()->back();
+            }
+            else $account = $this->accountRepo->updateDataById($id, $data);
             $account->roles()->sync($request->get('role_id'));
             $this->toastSuccess("Updated account successfully", "Success");
             DB::commit();
@@ -168,8 +176,8 @@ class AdminAccountController extends Controller
 
             if (Hash::check($old_Password, $account->password)) {
                 if ($new_Password == $confirm_Password) {
-                    $hash_Passwrod = Hash::make($new_Password);
-                    $this->accountRepo->changePassword($id, $hash_Passwrod);
+                    $hash_Password = Hash::make($new_Password);
+                    $this->accountRepo->updateDataById($id, ['password' => $hash_Password]);
                     $this->toastSuccess("Change password successfully", "Success");
                     return redirect()->route('accounts.index');
                 } else {

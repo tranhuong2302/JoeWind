@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\AdminAccountApiController;
+use App\Http\Controllers\Api\Admin\AdminAttributeApiController;
+use App\Http\Controllers\Api\Admin\AdminCategoryApiController;
 use App\Http\Controllers\Api\Admin\AdminProductApiController;
 use App\Http\Controllers\Api\Admin\AdminRoleApiController;
 use Illuminate\Http\Request;
@@ -24,33 +26,24 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('accounts')->group(function () {
         Route::get('/', [AdminAccountApiController:: class, 'getApiAccount']);
-//        Route::delete('{id}/delete', [AdminAccountApiController::class, 'deleteAccountById']);
-//        Route::delete('deleteSelected', [AdminAccountApiController::class, 'deleteSelected']);
+    });
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [AdminCategoryApiController:: class, 'getApiCategories']);
+    });
+    Route::prefix('attributes')->group(function () {
+        Route::get('/', [AdminAttributeApiController:: class, 'getApiAttribute']);
+        Route::get('/{id}/values', [AdminAttributeApiController:: class, 'findApiAttributeValueByAttributeId'])
+        ->name('attributes.values');
     });
 
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminProductApiController::class, 'getApiProducts']);
-//        Route::delete('{id}/delete', [AdminProductApiController::class, 'deleteProductById']);
-//        Route::delete('deleteSelected', [AdminProductApiController::class, 'deleteSelected']);
     });
 
     Route::prefix('roles')->group(function () {
         Route::get('/', [AdminRoleApiController::class, 'getApiRoles']);
-//        Route::delete('{id}/delete', [AdminRoleApiController::class, 'deleteRoleById']);
-//        Route::delete('deleteSelected', [AdminRoleApiController::class, 'deleteSelected']);
     });
 
-    //    Route::prefix('categories')->group(function () {
-//        Route::get('/', [AdminCategoryApiController::class, 'getApiCategories']);
-//        Route::delete('{id}/delete', [AdminCategoryApiController::class, 'deleteCategoryById']);
-//        Route::delete('deleteSelected', [AdminCategoryApiController::class, 'deleteSelected']);
-//    });
-
-//    Route::prefix('permissions')->group(function () {
-//        Route::get('/', [AdminPermissionApiController::class, 'getApiPermissions']);
-//        Route::delete('{id}/delete', [AdminPermissionApiController::class, 'deletePermissionById']);
-//        Route::delete('deleteSelected', [AdminPermissionApiController::class, 'deleteSelected']);
-//    });
 
 
 });

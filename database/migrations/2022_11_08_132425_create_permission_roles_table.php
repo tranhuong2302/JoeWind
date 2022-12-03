@@ -30,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('permission_roles', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('permission_roles');
     }
 };

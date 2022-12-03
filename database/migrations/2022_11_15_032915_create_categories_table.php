@@ -20,9 +20,13 @@ return new class extends Migration
             $table->longtext('description');
             $table->string('image_path')->nullable();
             $table->string('slug', 255);
+            $table->integer('status')->default(1);
+            $table->integer('is_feature')->default(0);
+            $table->integer('sort_order')->default(0);
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

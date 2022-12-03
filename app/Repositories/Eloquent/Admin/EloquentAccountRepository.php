@@ -9,7 +9,7 @@ use App\Repositories\Interfaces\Admin\IAccountRepository;
 class EloquentAccountRepository extends EloquentBaseRepository implements IAccountRepository
 {
 
-    protected $account;
+    private User $account;
 
     public function __construct(User $account)
     {
@@ -17,14 +17,9 @@ class EloquentAccountRepository extends EloquentBaseRepository implements IAccou
         $this->account = $account;
     }
 
-    public function changePassword($id, $request)
+    public function checkExistsByEmail($email)
     {
-        $data = $this->account->find($id);
-        if($data){
-            $data->update(['password' => $request]);
-            return $data;
-        }
-        return false;
+        return $this->account->where('email', $email)->first();
     }
 
 }
