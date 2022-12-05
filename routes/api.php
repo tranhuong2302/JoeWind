@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Admin\AdminAccountApiController;
 use App\Http\Controllers\Api\Admin\AdminAttributeApiController;
 use App\Http\Controllers\Api\Admin\AdminCategoryApiController;
 use App\Http\Controllers\Api\Admin\AdminProductApiController;
+use App\Http\Controllers\Api\Admin\AdminProductAttributeValueApiController;
 use App\Http\Controllers\Api\Admin\AdminRoleApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,17 +34,21 @@ Route::prefix('admin')->group(function () {
     Route::prefix('attributes')->group(function () {
         Route::get('/', [AdminAttributeApiController:: class, 'getApiAttribute']);
         Route::get('/{id}/values', [AdminAttributeApiController:: class, 'findApiAttributeValueByAttributeId'])
-        ->name('attributes.values');
+            ->name('attributes.values');
     });
 
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminProductApiController::class, 'getApiProducts']);
     });
+    Route::prefix('product/{id}/values')->group(function () {
+        Route::get('', [AdminProductAttributeValueApiController::class, 'getApiProductAttributeValue'])->name('apiProductValues.index');
+        Route::get('/{idValue}', [AdminProductAttributeValueApiController::class, 'findProductAttributeValueById']);
+        Route::put('/{idValue}', [AdminProductAttributeValueApiController::class, 'update']);
+    });
 
     Route::prefix('roles')->group(function () {
         Route::get('/', [AdminRoleApiController::class, 'getApiRoles']);
     });
-
 
 
 });

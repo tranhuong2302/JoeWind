@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Interfaces\Admin;
 
-interface IRoleRepository
+use App\Repositories\Interfaces\IBaseRepository;
+
+interface IRoleRepository extends IBaseRepository
 {
 
 }

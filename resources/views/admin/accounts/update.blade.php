@@ -179,7 +179,6 @@
         $(function () {
             $(".selectRoles").select2({
                 placeholder: "Select Roles",
-                tags: true,
                 tokenSeparators: [',', ' ']
             });
         })

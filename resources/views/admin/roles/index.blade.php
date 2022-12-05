@@ -110,15 +110,10 @@
                                         \
                                         @endif\
                                          @if(auth()->user()->checkPermissionAccess('delete-role'))\
-                                            <form method="POST" class="action_delete"\
-                                                action=/admin/roles/' + id + '/delete\
-                                                data-url=/admin/roles/' + id + '/delete>\
-                                                @csrf\
-                                                <input type="hidden" name="_method" value="DELETE" />\
-                                                <button class="dropdown-item" type="submit">\
-                                                    <i class="bx bx-trash me-1"></i>Delete\
-                                                </button>\
-                                            </form>\
+                                            <a class="dropdown-item action_delete"\
+                                                data-url="/admin/roles/' + id + '/delete"\>\
+                                                <i class="bx bx-trash me-1"></i>Delete\
+                                            </a>\
                                         @endif\
                                     </div>\
                                 </div>'

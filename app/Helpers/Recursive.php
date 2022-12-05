@@ -2,19 +2,20 @@
 
 namespace App\Helpers;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class Recursive
 {
-    private $data;
+    private Collection $data;
     private $html;
-    private $stringUrl;
-    private $permission;
+    private string $stringUrl;
+    private string $permission;
 
-    public function __construct($data, $stringUrl, $permission)
+    public function __construct(Collection $data, string $stringUrl, string $permission)
     {
         $this->data = $data;
         $this->stringUrl = $stringUrl;
         $this->permission = $permission;
-
     }
 
     public function dataTableRecursive($id = 0, $text = '')
@@ -39,7 +40,7 @@ class Recursive
                 }
                 if (empty($value->image_path) && $this->stringUrl != 'permissions') {
                     $this->html .= '<td><img class="rounded-circle" width="50" height="50"
-                                        src="" alt="" />
+                                        src="../admin/assets/img/avatars/baseAvatar.png" alt="" />
                                     </td>';
                 }
                 if ($value->status != '') {
@@ -57,7 +58,6 @@ class Recursive
                     } elseif ($is_feature == 0) {
                         $this->html .= '<td><span class="badge bg-label-warning me-1">Off</span></td>';
                     }
-
                 }
                 $this->html .= '
                         <td>
@@ -73,21 +73,15 @@ class Recursive
                                     </a>';
                 }
                 if (auth()->user()->checkPermissionAccess("delete-$this->permission")) {
-                    $this->html .= '<form method = "POST" class="action_deleteRecursive"
-                                          data-url = "/admin/' . $this->stringUrl . '/' . $value->id . '/delete"
-                                          action = "/admin/' . $this->stringUrl . '/' . $value->id . '/delete"
-                                              >
-                                       <input type = "hidden" name = "_token" value = "' . csrf_token() . '" />
-                                       <input type = "hidden" name = "_method" value = "DELETE" />
-                                        <button class="dropdown-item" type = "submit" >
-                                            <i class="bx bx-trash me-1" ></i > Delete
-                                        </button >
-                                    </form >';
+                    $this->html .= '<a class="dropdown-item action_deleteRecursive"
+                                       data-url = "/admin/' . $this->stringUrl . '/' . $value->id . '/delete">
+                                       <i class="bx bx-trash me-1" ></i > Delete
+                                    </a>';
                 }
-                $this->html .= '</div >
-                            </div >
-                        </td >
-                     </tr > ';
+                $this->html .= '</div>
+                            </div>
+                        </td>
+                     </tr> ';
                 $this->dataTableRecursive($value->id, $text . '--');
             }
         }
@@ -98,7 +92,7 @@ class Recursive
     {
         foreach ($this->data as $value) {
             if ($value->parent_id == $id) {
-                if (in_array($value->id, $categoriesOfProduct)){
+                if (in_array($value->id, $categoriesOfProduct)) {
                     $this->html .= "<option selected value= " . $value->id . " >" . $text . $value->name . "</option>";
                 } else {
                     $this->html .= "<option value= " . $value->id . " >" . $text . $value->name . "</option>";

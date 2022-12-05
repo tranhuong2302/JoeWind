@@ -24,7 +24,6 @@ function actionDelete(event) {
                 success: function (data) {
                     if (data.status === 'SUCCESS') {
                         $('#table-dataTable').DataTable().ajax.reload(null, false);
-                        // that.remove();
                         toastr.success('Delete success.', 'Success',
                             {
                                 closeButton: true,
@@ -98,8 +97,6 @@ function actionDeleteRecursive(event) {
             });
         }
     })
-    console.log(that);
-    console.log(urlRequest);
 }
 
 function actionDeleteMultiple(event) {
@@ -216,8 +213,8 @@ function actionDeleteMultipleRecursive(event) {
 
 $(function () {
     $(".checkBoxAll").click(checkBoxAll);
-    $('#table-dataTable').on('click', 'form.action_delete', actionDelete);
-    $('#table-dataTableRecursive').on('click', 'form.action_deleteRecursive', actionDeleteRecursive);
+    $('#table-dataTable').on('click', 'a.action_delete', actionDelete);
+    $('#table-dataTableRecursive').on('click', 'a.action_deleteRecursive', actionDeleteRecursive);
     $("#deleteAllSelectedRecord").click(actionDeleteMultiple);
     $("#deleteAllSelectedRecordRecursive").click(actionDeleteMultipleRecursive);
 });

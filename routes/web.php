@@ -4,9 +4,11 @@ use App\Http\Controllers\Admin\AdminAccountController;
 use App\Http\Controllers\Admin\AdminAttributeController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminPermissionController;
+use App\Http\Controllers\Admin\AdminProductAttributeValueController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -105,6 +107,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:delete-category');
         Route::delete('deleteSelected', [AdminCategoryController::class, 'deleteSelected'])->name('categories.deleteSelected');
     });
+    Route::prefix('product/{id}/values')->group(function () {
+        Route::get('/', [AdminProductAttributeValueController::class, 'index'])->name('productValues.index')
+            ->middleware('can:products-list');
+    });
 
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminProductController::class, 'index'])->name('products.index')
@@ -123,6 +129,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:delete-product')->name('products.deleteSelected');
     });
 
+
+
     Route::prefix('attributes')->group(function () {
         Route::get('/', [AdminAttributeController::class, 'index'])->name('attributes.index')
             ->middleware('can:attributes-list');
@@ -140,4 +148,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             ->middleware('can:delete-attribute')->name('attributes.delete-attributeValue');
         Route::delete('deleteSelected', [AdminAttributeController::class, 'deleteSelected'])->name('attributes.deleteSelected');
     });
+});
+Route::prefix('')->group(function () {
+    Route::get('', [HomeController::class, 'index'])->name('user.index');
 });

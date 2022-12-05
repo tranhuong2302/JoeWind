@@ -98,15 +98,17 @@
                 },
                     {data: "id"},
                     {data: "name", width: '50px'},
-                    {data: "image_path",
+                    {
+                        data: "image_path",
                         'render': function (url) {
                             if (url) return '<img class="rounded-circle" width="50" height="50" src=' + url + '>'
                             else return '<img class="rounded-circle" width="50" height="50" src={{asset('admin/assets/img/avatars/baseAvatar.png')}}>'
                         }
                     },
-                    {data: "price",
-                        'render': function(price){
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+                    {
+                        data: "price",
+                        'render': function (price) {
+                            return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(price);
                         }
                     },
                     {data: "discount"},
@@ -134,21 +136,18 @@
                                     </button>\
                                     <div class="dropdown-menu">\
                                         @if(auth()->user()->checkPermissionAccess('edit-product'))\
-                                        <a class="dropdown-item" href=/admin/products/' + id + '/edit>\
+                                            <a class="dropdown-item" href=/admin/products/' + id + '/edit>\
                                                 <i class="bx bx-edit-alt me-1"></i> Edit\
                                             </a>\
-                                        \
+                                            \<a class="dropdown-item" href=/admin/product/' + id + '/values>\
+                                                <i class="bx bxs-grid"></i> View Product Attribute Values\
+                                            </a>\
                                         @endif\
                                          @if(auth()->user()->checkPermissionAccess('delete-account'))\
-                                            <form method="POST" class="action_delete"\
-                                                action=/admin/products/' + id + '/delete\
-                                                data-url=/admin/products/' + id + '/delete>\
-                                                @csrf\
-                                                <input type="hidden" name="_method" value="DELETE" />\
-                                                <button class="dropdown-item" type="submit">\
-                                                    <i class="bx bx-trash me-1"></i>Delete\
-                                                </button>\
-                                            </form>\
+                                            <a class="dropdown-item action_delete"\
+                                                data-url="/admin/products/' + id + '/delete"\>\
+                                                <i class="bx bx-trash me-1"></i>Delete\
+                                            </a>\
                                         @endif\
                                     </div>\
                                 </div>'

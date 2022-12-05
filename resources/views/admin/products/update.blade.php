@@ -94,18 +94,6 @@
                                 />
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="quantity" class="form-label">Quantity</label>
-                                <input
-                                    class="form-control"
-                                    type="number"
-                                    id="quantity"
-                                    name="quantity"
-                                    min="0"
-                                    value="{{$product->quantity}}"
-                                    placeholder="Enter quantity"
-                                />
-                            </div>
-                            <div class="mb-3 col-md-6">
                                 <label for="attribute" class="form-label">Attribute</label>
                                 <select id="attribute" class="select2 form-select selectAttribute">
                                     <option>Select Attribute</option>
@@ -273,12 +261,10 @@
         $(function () {
             $(".selectCategories").select2({
                 placeholder: "Select Category",
-                tags: true,
                 tokenSeparators: [',', ' ']
             });
             $(".selectAttributeValue").select2({
                 placeholder: "Select Attribute Values",
-                tags: true,
                 tokenSeparators: [',', ' ']
             });
             $("#inputGroupFile02").on('change', function () {
